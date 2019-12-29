@@ -85,60 +85,6 @@ public class DicesColorSet {
         }
     }
 
-    /*
-    public void setTwoDiceItem(int diceOrder, int colorCode) {
-        if (diceOrder < 0 || diceOrder >= twoDice.length) return;
-        this.twoDice[diceOrder] = colorCode;
-    }
-
-    public void setThreeDiceItem(int diceOrder, int colorCode) {
-        if (diceOrder < 0 || diceOrder >= threeDice.length) return;
-        this.threeDice[diceOrder] = colorCode;
-    }
-
-    public void setFourDiceItem(int diceOrder, int colorCode) {
-        if (diceOrder < 0 || diceOrder >= fourDice.length) return;
-        this.fourDice[diceOrder] = colorCode;
-    }
-
-    public void setFiveDiceItem(int diceOrder, int colorCode) {
-        if (diceOrder < 0 || diceOrder >= fiveDice.length) return;
-        this.fiveDice[diceOrder] = colorCode;
-    }
-
-    public void setSixDiceItem(int diceOrder, int colorCode) {
-        if (diceOrder < 0 || diceOrder >= sixDice.length) return;
-        this.sixDice[diceOrder] = colorCode;
-    }
-    */
-
-    /*
-    public int getTwoDiceItem(int diceOrder) {
-        if (diceOrder < 0 || diceOrder >= twoDice.length) return 0;
-        return twoDice[diceOrder];
-    }
-
-    public int getThreeDiceItem(int diceOrder) {
-        if (diceOrder < 0 || diceOrder >= threeDice.length) return 0;
-        return threeDice[diceOrder];
-    }
-
-    public int getFourDiceItem(int diceOrder) {
-        if (diceOrder < 0 || diceOrder >= fourDice.length) return 0;
-        return fourDice[diceOrder];
-    }
-
-    public int getFiveDiceItem(int diceOrder) {
-        if (diceOrder < 0 || diceOrder >= fiveDice.length) return 0;
-        return fiveDice[diceOrder];
-    }
-
-    public int getSixDiceItem(int diceOrder) {
-        if (diceOrder < 0 || diceOrder >= sixDice.length) return 0;
-        return sixDice[diceOrder];
-    }
-    */
-
     //-----------------------------------------------------------------
 
     public String getDiceColorSetToString(int diceCount) {
@@ -205,56 +151,5 @@ public class DicesColorSet {
             default:
                 return new int[]{oneDice};
         }
-    }
-
-    //-----------------------------------------------------------------
-
-
-    public int getOneDice() {
-        return oneDice;
-    }
-
-    public void setOneDice(int oneDice) {
-        this.oneDice = oneDice;
-    }
-
-    public int[] getTwoDice() {
-        return twoDice;
-    }
-
-    public void setTwoDice(int[] twoDice) {
-        this.twoDice = twoDice;
-    }
-
-    public int[] getThreeDice() {
-        return threeDice;
-    }
-
-    public void setThreeDice(int[] threeDice) {
-        this.threeDice = threeDice;
-    }
-
-    public int[] getFourDice() {
-        return fourDice;
-    }
-
-    public void setFourDice(int[] fourDice) {
-        this.fourDice = fourDice;
-    }
-
-    public int[] getFiveDice() {
-        return fiveDice;
-    }
-
-    public void setFiveDice(int[] fiveDice) {
-        this.fiveDice = fiveDice;
-    }
-
-    public int[] getSixDice() {
-        return sixDice;
-    }
-
-    public void setSixDice(int[] sixDice) {
-        this.sixDice = sixDice;
     }
 }

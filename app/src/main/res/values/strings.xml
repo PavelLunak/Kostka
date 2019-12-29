@@ -16,6 +16,9 @@
     <string name="here">HERE</string>
     <string name="here_cz">ZDE</string>
 
+    <string name="toast_color">The color selection is only available when the dices are displayed.</string>
+    <string name="toast_color_cz">Volba barev je dostupná pouze při zobrazených kostkách.</string>
+
     <string name="text_info_1">Welcome to the app Dices!</string>
     <string name="text_info_1_cz">Vítejte v aplikaci Kostky!</string>
 

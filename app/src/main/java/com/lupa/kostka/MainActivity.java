@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.lupa.kostka.fragments.FragmentDices;
 import com.lupa.kostka.fragments.FragmentInfo;
@@ -367,7 +368,17 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.imgColor:
                 Animators.animateButtonClick2(imgColor, 1f);
-                showSettingsColor(!settingsColorShowed, true);
+                if (!isFragmentCurrent("FragmentDices", fragmentManager)) {
+                    Toast.makeText(
+                            MainActivity.this,
+                            getResources().getString(
+                                    language == Language.ENG ?
+                                            R.string.toast_color :
+                                            R.string.toast_color_cz),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    showSettingsColor(!settingsColorShowed, true);
+                }
                 break;
             case R.id.imgLanguage:
                 Animators.animateButtonClick2(imgLanguage, 1f);

@@ -1,6 +1,8 @@
 package com.lupa.kostka.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lupa.kostka.Animators;
 import com.lupa.kostka.MainActivity;
 import com.lupa.kostka.R;
 import com.lupa.kostka.utils.AppUtils;
 
-public class FragmentInfo extends Fragment {
+public class FragmentInfo extends Fragment implements View.OnClickListener {
 
     MainActivity activity;
 
@@ -63,12 +66,17 @@ public class FragmentInfo extends Fragment {
         labelVersion = view.findViewById(R.id.labelVersion);
         imageView6 = view.findViewById(R.id.imageView6);
 
-        root.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (activity.settingsShowed) activity.showSettings(false, true);
-            }
-        });
+        root.setOnClickListener(this);
+        labelTitle.setOnClickListener(this);
+        textView4.setOnClickListener(this);
+        textView5.setOnClickListener(this);
+        textView6.setOnClickListener(this);
+        textView7.setOnClickListener(this);
+        textView9.setOnClickListener(this);
+        titleSourceCode.setOnClickListener(this);
+        labelSourceCode.setOnClickListener(this);
+        labelVersion.setOnClickListener(this);
+        imageView6.setOnClickListener(this);
 
         return view;
     }
@@ -122,5 +130,37 @@ public class FragmentInfo extends Fragment {
     public void updateImage() {
         if (activity.language == MainActivity.Language.CZ) imageView6.setImageDrawable(activity.getResources().getDrawable(R.drawable.itnetwork_winter_2019));
         else imageView6.setImageDrawable(activity.getResources().getDrawable(R.drawable.itnetwork_winter_2019_1, activity.getTheme()));
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (activity.settingsShowed) activity.showSettings(false, true);
+
+        switch (view.getId()) {
+            case R.id.root:
+                if (activity.settingsShowed) activity.showSettings(false, true);
+                break;
+            case R.id.textView9:
+                Animators.animateButtonClick2(textView9, 1f);
+                String url = "https://www.itnetwork.cz/";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+                break;
+            case R.id.imageView6:
+                String url2 = "https://www.itnetwork.cz/programovani/programatorske-souteze/itnetwork-winter-2019-ceny-v-hodnote-10-000-kc";
+                Intent i2 = new Intent(Intent.ACTION_VIEW);
+                i2.setData(Uri.parse(url2));
+                startActivity(i2);
+                break;
+            case R.id.labelSourceCode:
+                Animators.animateButtonClick2(labelSourceCode, 1f);
+                String url3 = "https://github.com/PavelLunak/Kostka";
+                Intent i3 = new Intent(Intent.ACTION_VIEW);
+                i3.setData(Uri.parse(url3));
+                startActivity(i3);
+                break;
+        }
     }
 }

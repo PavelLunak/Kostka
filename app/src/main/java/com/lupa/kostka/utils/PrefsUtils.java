@@ -18,28 +18,7 @@ public class PrefsUtils {
     public static void updateDiceColor(Context context, int dicesCount, String colorCodes) {
         SharedPreferences pref = context.getSharedPreferences("DicePref", context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-
-        String tag = "oneDice";
-
-        switch (dicesCount) {
-            case 2:
-                tag = "twoDice";
-                break;
-            case 3:
-                tag = "threeDice";
-                break;
-            case 4:
-                tag = "fourDice";
-                break;
-            case 5:
-                tag = "fiveDice";
-                break;
-            case 6:
-                tag = "sixDice";
-                break;
-        }
-
-        editor.putString(tag, colorCodes);
+        editor.putString(getTagByDicesCount(dicesCount), colorCodes);
         editor.commit();
     }
 
