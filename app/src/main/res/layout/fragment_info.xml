@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundDark"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/labelTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/font_kabanan"
+        android:gravity="center_horizontal"
+        android:text="Kostka"
+        android:textColor="@color/colorBackgroundLight"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/colorBackgroundLight" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/checkBox2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/text_info_1"
+                android:textColor="@color/colorBackgroundLight"
+                android:fontFamily="@font/font_kabanan"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView4"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/text_info_2"
+                android:textColor="@color/colorBackgroundLight"
+                android:fontFamily="@font/font_kabanan"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_horizontal"
+                android:text="@string/text_info_3"
+                android:textColor="@color/colorBackgroundLight"
+                android:fontFamily="@font/font_kabanan"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView7"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_horizontal"
+                android:text="@string/itnetwork"
+                android:textColor="@color/colorBackgroundLight"
+                android:fontFamily="@font/font_kabanan"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="260dp"
+                android:layout_below="@+id/textView9"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@drawable/itnetwork_winter_2019_1" />
+
+            <TextView
+                android:id="@+id/titleSourceCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView6"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/source_code"
+                android:textColor="@color/colorBackgroundLight"
+                android:fontFamily="@font/font_kabanan"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/labelSourceCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView6"
+                android:layout_alignBottom="@+id/textView5"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@id/titleSourceCode"
+                android:layout_toRightOf="@id/titleSourceCode"
+                android:text="@string/here"
+                android:textColor="@color/colorBackgroundLight"
+                android:fontFamily="@font/font_kabanan"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titleSourceCode"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/version"
+                android:textColor="@color/colorBackgroundLight"
+                android:fontFamily="@font/font_kabanan"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/labelVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView5"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/textView5"
+                android:layout_toRightOf="@+id/textView5"
+                android:text="1.0"
+                android:textColor="@color/colorBackgroundLight"
+                android:fontFamily="@font/font_kabanan"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

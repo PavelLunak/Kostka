@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundDark">
+
+    <TableLayout
+        android:id="@+id/tableButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/btn01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/font_kabanan"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingStart="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="5dp"
+                android:scaleX="0"
+                android:scaleY="0"
+                android:text="1"
+                android:textColor="@color/colorBackgroundDark"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/font_kabanan"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingStart="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="5dp"
+                android:scaleX="0"
+                android:scaleY="0"
+                android:text="2"
+                android:textColor="@color/colorBackgroundDark"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn03"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/font_kabanan"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingStart="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="5dp"
+                android:scaleX="0"
+                android:scaleY="0"
+                android:text="3"
+                android:textColor="@color/colorBackgroundDark"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/btn04"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/font_kabanan"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingStart="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="5dp"
+                android:scaleX="0"
+                android:scaleY="0"
+                android:text="4"
+                android:textColor="@color/colorBackgroundDark"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn05"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/font_kabanan"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingStart="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="5dp"
+                android:scaleX="0"
+                android:scaleY="0"
+                android:text="5"
+                android:textColor="@color/colorBackgroundDark"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn06"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/font_kabanan"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingStart="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="5dp"
+                android:scaleX="0"
+                android:scaleY="0"
+                android:text="6"
+                android:textColor="@color/colorBackgroundDark"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/titleCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tableButtons"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/font_kabanan"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingStart="30dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="5dp"
+        android:scaleX="0"
+        android:text="Dices count:"
+        android:textColor="@color/colorBackgroundLight"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

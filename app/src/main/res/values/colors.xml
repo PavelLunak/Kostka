@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="colorBackgroundLight">#DDD6BD</color>
+    <color name="colorBackgroundDark">#1F1F1F</color>
+
+    <color name="colorButtonPressed">#AFA689</color>
+
+    <!-- WHITE DICE -->
+    <color name="diceColorWhite">#F5EFD5</color>
+    <color name="diceColorWhite2">#BEBAAB</color>
+
+    <!-- BLACK DICE -->
+    <color name="diceColorBlack">#555252</color>
+    <color name="diceColorBlack2">#000000</color>
+
+    <!-- RED DICE A00F0F -->
+    <color name="diceColorRed">#E71414</color>
+    <color name="diceColorRed2">#831313</color>
+
+    <!-- BLUE DICE 2172A7 -->
+    <color name="diceColorBlue">#1493E7</color>
+    <color name="diceColorBlue2">#15425F</color>
+
+    <!-- GREEN DICE 1E7222 -->
+    <color name="diceColorGreen">#1ABB21</color>
+    <color name="diceColorGreen2">#164B19</color>
+
+    <!-- YELLOW DICE B1A325 -->
+    <color name="diceColorYellow">#E9D310</color>
+    <color name="diceColorYellow2">#817720</color>
+
+    <!-- BLACK DICE POINT -->
+    <color name="pointColorBlackStart">#5F5F5F</color>
+    <color name="pointColorBlackEnd">#797979</color>
+
+    <!-- WHITE DICE POINT -->
+    <color name="pointColorWhiteStart">#C4C1C1</color>
+    <color name="pointColorWhiteEnd">#E6E2E2</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGray">#E6E6E6</color>
+
+    <color name="colorCounter">#B4237E10</color>
+    <color name="colorCounterShadow">#46FFFFFF</color>
+</resources>

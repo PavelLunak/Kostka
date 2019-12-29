@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundDark">
+
+    <!--
+    <LinearLayout
+        android:id="@+id/layoutPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/button"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_kabanan"
+            android:gravity="center_horizontal|center_vertical"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="5dp"
+            android:text="P"
+            android:textColor="@color/colorBackgroundDark"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_kabanan"
+            android:gravity="center_horizontal|center_vertical"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="5dp"
+            android:text="L"
+            android:textColor="@color/colorBackgroundDark"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_kabanan"
+            android:gravity="center_horizontal|center_vertical"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="5dp"
+            android:text="A"
+            android:textColor="@color/colorBackgroundDark"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_kabanan"
+            android:gravity="center_horizontal|center_vertical"
+            android:paddingStart="30dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="5dp"
+            android:text="Y"
+            android:textColor="@color/colorBackgroundDark"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <com.lupa.kostka.Dice
+            android:id="@+id/dice1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </com.lupa.kostka.Dice>
+
+        <com.lupa.kostka.Dice
+            android:id="@+id/dice2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </com.lupa.kostka.Dice>
+
+        <com.lupa.kostka.Dice
+            android:id="@+id/dice3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </com.lupa.kostka.Dice>
+
+    </LinearLayout>
+
+    <com.lupa.kostka.DiceValuesCounter
+        android:id="@+id/valueCounter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

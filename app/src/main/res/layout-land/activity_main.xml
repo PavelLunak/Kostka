@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundDark">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BDD0E0"
+        app:srcCompat="@drawable/itnetwork_winter_2019_1" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layoutClick"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/btnSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgSettings"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/ic_settings" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutSettingsRoot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSettings"
+        android:layout_alignLeft="@id/btnSettings"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/layoutSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_layout_settings"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imgTheme"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/ic_brightness" />
+
+            <ImageView
+                android:id="@+id/imgColor"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/imgTheme"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_color" />
+
+            <ImageView
+                android:id="@+id/imgLanguage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/imgColor"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_language" />
+
+            <ImageView
+                android:id="@+id/imgInfo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/imgLanguage"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_info" />
+
+            <ImageView
+                android:id="@+id/imgClose"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/imgInfo"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_power" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/bg_layout_settings"
+            android:padding="10dp"
+            android:scaleX="0"
+            android:visibility="gone">
+
+            <View
+                android:id="@+id/viewBlack"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_view_black"
+                android:clickable="true" />
+
+            <View
+                android:id="@+id/viewWhite"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@id/viewBlack"
+                android:layout_toRightOf="@id/viewBlack"
+                android:background="@drawable/bg_view_white"
+                android:clickable="true" />
+
+            <View
+                android:id="@+id/viewRed"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@id/viewWhite"
+                android:layout_toRightOf="@id/viewWhite"
+                android:background="@drawable/bg_view_red"
+                android:clickable="true" />
+
+            <View
+                android:id="@+id/viewBlue"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/viewBlack"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_view_blue"
+                android:clickable="true" />
+
+            <View
+                android:id="@+id/viewGreen"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/viewBlack"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@id/viewBlue"
+                android:layout_toRightOf="@id/viewBlue"
+                android:background="@drawable/bg_view_green"
+                android:clickable="true" />
+
+            <View
+                android:id="@+id/viewYellow"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/viewBlack"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@id/viewGreen"
+                android:layout_toRightOf="@id/viewGreen"
+                android:background="@drawable/bg_view_yellow"
+                android:clickable="true" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="110dp"
+            android:background="@drawable/bg_layout_settings"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:scaleX="0"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgCz"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:alpha="0.5"
+                app:srcCompat="@drawable/cz" />
+
+            <ImageView
+                android:id="@+id/imgEng"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.5"
+                app:srcCompat="@drawable/eng" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

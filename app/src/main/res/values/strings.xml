@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Dice</string>
+    <string name="app_name_cz">Kostka</string>
+
+    <string name="itnetwork">ITnetwork</string>
+
+    <string name="dices_count">Dices count</string>
+    <string name="dices_count_cz">Počet kostek</string>
+
+    <string name="version">Version:</string>
+    <string name="version_cz">Verze:</string>
+
+    <string name="source_code">Source codes</string>
+    <string name="source_code_cz">Zdrojové kódy</string>
+
+    <string name="here">HERE</string>
+    <string name="here_cz">ZDE</string>
+
+    <string name="text_info_1">Welcome to the app Dices!</string>
+    <string name="text_info_1_cz">Vítejte v aplikaci Kostky!</string>
+
+    <string name="text_info_2">The application serves as a substitute for dice. Missing dice to play? If so, use this app! You can choose from one to six dice. Individual dice can be colored with one of six prepared colors.</string>
+    <string name="text_info_2_cz">Aplikace slouží jako náhrada hracích kostek. Postrádáte kostky ke hře? Pokud ano, použijte tuto aplikaci! Máte na výběr jednu až šest kostek. Jednotlivé kostky můžete obarvit jednou ze šesti připravených barev.</string>
+
+    <string name="text_info_3">This app was created for the competition announced on the server</string>
+    <string name="text_info_3_cz">Tato aplikace byla vytvořena do soutěže vyhlášené na serveru</string>
+</resources>
