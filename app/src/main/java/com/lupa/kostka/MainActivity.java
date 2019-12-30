@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lupa.kostka.fragments.FragmentDices;
@@ -41,15 +42,17 @@ public class MainActivity extends AppCompatActivity implements
 
     FragmentManager fragmentManager;
     FrameLayout container, layoutClick;
-    RelativeLayout root, layoutSettings, layoutSettingsRoot, layoutColor;
+    RelativeLayout root, layoutSettings, layoutSettingsRoot, layoutColor, layoutInfo1;
     LinearLayout btnSettings, layoutLanguage;
     ImageView imgSettings, imgTheme, imgColor, imgLanguage, imgInfo, imgClose, imageView, imgCz, imgEng;
     View viewBlack, viewWhite, viewRed, viewBlue, viewGreen, viewYellow;
+    TextView labelInfo1, labelClose;
 
     public boolean settingsShowed;
     public boolean settingsColorShowed;
     public boolean settingsLanguageShowed;
     boolean introShowed;
+    boolean help1Showed;
 
     public Counter counter;
 
@@ -66,8 +69,6 @@ public class MainActivity extends AppCompatActivity implements
 
     int value;
 
-    public boolean instanceStateNull = true;
-
     int dicesColorSelectCounter;
 
 
@@ -79,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
-
-        instanceStateNull = savedInstanceState == null;
 
         fragmentManager = getSupportFragmentManager();
 
@@ -107,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements
         viewBlue = findViewById(R.id.viewBlue);
         viewGreen = findViewById(R.id.viewGreen);
         viewYellow = findViewById(R.id.viewYellow);
+        layoutInfo1 = findViewById(R.id.layoutInfo1);
+        labelInfo1 = findViewById(R.id.labelInfo1);
+        labelClose = findViewById(R.id.labelClose);
 
         btnSettings.setOnClickListener(this);
         imgTheme.setOnClickListener(this);
@@ -117,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements
         imgCz.setOnClickListener(this);
         imgEng.setOnClickListener(this);
         layoutClick.setOnClickListener(this);
+        labelClose.setOnClickListener(this);
 
         viewBlack.setOnClickListener(this);
         viewWhite.setOnClickListener(this);
@@ -181,6 +184,11 @@ public class MainActivity extends AppCompatActivity implements
         super.onPause();
         if (introTimer != null) introTimer.cancel();
         introTimer = null;
+
+        PrefsUtils.updateDiceColor(
+                this,
+                dicesCount,
+                dicesColorSet.getDiceColorSetToString(dicesCount));
     }
 
     @Override
@@ -222,7 +230,6 @@ public class MainActivity extends AppCompatActivity implements
             btnSettings.setVisibility(View.VISIBLE);
             btnSettings.setScaleX(1f);
             btnSettings.setScaleY(1f);
-            if (instanceStateNull) showFragmentMain();
         }
 
         fragmentMain = (FragmentMain) fragmentManager.findFragmentByTag("FragmentMain");
@@ -231,6 +238,10 @@ public class MainActivity extends AppCompatActivity implements
 
         if (isFragmentCurrent("FragmentDices", fragmentManager)) {
             layoutClick.setVisibility(View.VISIBLE);
+
+            if (PrefsUtils.canShowHelp1(this)) {
+                showHelp1(true, !help1Showed);
+            }
         } else {
             layoutClick.setVisibility(View.GONE);
         }
@@ -258,6 +269,7 @@ public class MainActivity extends AppCompatActivity implements
         outState.putParcelable("counter", counter);
         outState.putInt("dicesCount", dicesCount);
         outState.putInt("dicesColorSelectCounter", dicesColorSelectCounter);
+        outState.putBoolean("help1Showed", help1Showed);
     }
 
     @Override
@@ -272,6 +284,7 @@ public class MainActivity extends AppCompatActivity implements
         counter = savedInstanceState.getParcelable("counter");
         dicesCount = savedInstanceState.getInt("dicesCount", 1);
         dicesColorSelectCounter = savedInstanceState.getInt("dicesColorSelectCounter", 0);
+        help1Showed = savedInstanceState.getBoolean("help1Showed", false);
     }
 
     @Override
@@ -314,6 +327,10 @@ public class MainActivity extends AppCompatActivity implements
 
         if (isFragmentCurrent("FragmentDices", fragmentManager)) {
             layoutClick.setVisibility(View.VISIBLE);
+
+            if (PrefsUtils.canShowHelp1(this)) {
+                showHelp1(true, !help1Showed);
+            }
         } else {
             layoutClick.setVisibility(View.GONE);
         }
@@ -463,6 +480,21 @@ public class MainActivity extends AppCompatActivity implements
 
                 if (dicesCount < 2)
                     showSettingsColor(false, true);
+                break;
+            case R.id.labelClose:
+                Animators.animateButtonClick2(labelClose, 1f);
+
+                Animators.animateHideLayoutSettings(layoutInfo1, new OnAnimationEndListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        layoutInfo1.setVisibility(View.GONE);
+                        layoutInfo1.setScaleX(0);
+                        layoutInfo1.setScaleY(0);
+
+                    }
+                });
+
+                PrefsUtils.hideHelp1(MainActivity.this);
                 break;
         }
     }
@@ -675,6 +707,43 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    public void showHelp1(boolean show, boolean animate) {
+        if (show) {
+            help1Showed = true;
+            layoutInfo1.setVisibility(View.VISIBLE);
+
+            if (animate) {
+                Animators.animateShowLayoutSettings(layoutInfo1, new OnAnimationEndListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        layoutInfo1.setScaleX(1f);
+                        layoutInfo1.setScaleY(1f);
+                    }
+                });
+            } else {
+                layoutInfo1.setScaleX(1f);
+                layoutInfo1.setScaleY(1f);
+            }
+        } else {
+            help1Showed = true;
+
+            if (animate) {
+                Animators.animateHideLayoutSettings(layoutInfo1, new OnAnimationEndListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        layoutInfo1.setScaleX(1f);
+                        layoutInfo1.setScaleY(1f);
+                        layoutInfo1.setVisibility(View.GONE);
+                    }
+                });
+            } else {
+                layoutInfo1.setScaleX(1f);
+                layoutInfo1.setScaleY(1f);
+                layoutInfo1.setVisibility(View.GONE);
+            }
+        }
+    }
+
     private int incrementDicesColorSelectCounter() {
         if (dicesColorSelectCounter < dicesCount) dicesColorSelectCounter ++;
         else dicesColorSelectCounter = 1;
@@ -714,7 +783,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void updateImage() {
-        if (language == MainActivity.Language.CZ) imageView.setImageDrawable(getResources().getDrawable(R.drawable.itnetwork_winter_2019, getTheme()));
-        else imageView.setImageDrawable(getResources().getDrawable(R.drawable.itnetwork_winter_2019_1, getTheme()));
+        if (language == MainActivity.Language.CZ) {
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.itnetwork_winter_2019, getTheme()));
+            labelInfo1.setText(getResources().getString(R.string.text_help_1_cz));
+        } else {
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.itnetwork_winter_2019_1, getTheme()));
+            labelInfo1.setText(getResources().getString(R.string.text_help_1));
+        }
     }
 }

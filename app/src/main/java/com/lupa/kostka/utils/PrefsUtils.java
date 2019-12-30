@@ -24,7 +24,7 @@ public class PrefsUtils {
 
     public static boolean getLightTheme(Context context) {
         SharedPreferences pref = context.getSharedPreferences("DicePref", context.MODE_PRIVATE);
-        return pref.getBoolean("isLightTheme", true);
+        return pref.getBoolean("isLightTheme", false);
     }
 
     public static boolean getEngLanguage(Context context) {
@@ -54,5 +54,17 @@ public class PrefsUtils {
             default:
                 return "oneDice";
         }
+    }
+
+    public static boolean canShowHelp1(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("DicePref", context.MODE_PRIVATE);
+        return pref.getBoolean("help1", true);
+    }
+
+    public static void hideHelp1(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("DicePref", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("help1", false);
+        editor.commit();
     }
 }

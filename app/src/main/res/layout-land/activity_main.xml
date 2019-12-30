@@ -26,6 +26,41 @@
         android:layout_height="match_parent"
         android:clickable="true">
 
+        <RelativeLayout
+            android:id="@+id/layoutInfo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:background="@drawable/bg_layout_settings"
+            android:padding="30dp"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/labelInfo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_kabanan"
+                android:gravity="center_horizontal"
+                android:text="Pro zamíchání kostek klikni na displej. Dokud budeš držet prst na displeji, budou se kostky míchat."
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/labelClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelInfo1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/font_kabanan"
+                android:text="Zavřít"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
     </FrameLayout>
 
     <LinearLayout

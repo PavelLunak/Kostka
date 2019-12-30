@@ -15,6 +15,7 @@ import com.lupa.kostka.Dice;
 import com.lupa.kostka.DiceValuesCounter;
 import com.lupa.kostka.MainActivity;
 import com.lupa.kostka.R;
+import com.lupa.kostka.utils.PrefsUtils;
 
 
 public class FragmentDices extends Fragment implements View.OnClickListener {

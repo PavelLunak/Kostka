@@ -27,4 +27,7 @@
 
     <string name="text_info_3">This app was created for the competition announced on the server</string>
     <string name="text_info_3_cz">Tato aplikace byla vytvořena do soutěže vyhlášené na serveru</string>
+
+    <string name="text_help_1">Click the display to shuffle the dice. As long as the finger is on the display, the dice will mix.</string>
+    <string name="text_help_1_cz">Pro zamíchání kostek klikni na displej. Dokud bude prst na displeji, budou se kostky míchat.</string>
 </resources>
