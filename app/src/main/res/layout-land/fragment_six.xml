@@ -20,29 +20,29 @@
             android:orientation="horizontal"
             android:weightSum="3">
 
-            <com.lupa.kostka.Dice
+            <com.lupa.kostka.objects.Dice
                 android:id="@+id/dice1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-            </com.lupa.kostka.Dice>
+            </com.lupa.kostka.objects.Dice>
 
-            <com.lupa.kostka.Dice
+            <com.lupa.kostka.objects.Dice
                 android:id="@+id/dice2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-            </com.lupa.kostka.Dice>
+            </com.lupa.kostka.objects.Dice>
 
-            <com.lupa.kostka.Dice
+            <com.lupa.kostka.objects.Dice
                 android:id="@+id/dice3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-            </com.lupa.kostka.Dice>
+            </com.lupa.kostka.objects.Dice>
 
         </LinearLayout>
 
@@ -53,35 +53,35 @@
             android:orientation="horizontal"
             android:weightSum="3">
 
-            <com.lupa.kostka.Dice
+            <com.lupa.kostka.objects.Dice
                 android:id="@+id/dice4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-            </com.lupa.kostka.Dice>
+            </com.lupa.kostka.objects.Dice>
 
-            <com.lupa.kostka.Dice
+            <com.lupa.kostka.objects.Dice
                 android:id="@+id/dice5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-            </com.lupa.kostka.Dice>
+            </com.lupa.kostka.objects.Dice>
 
-            <com.lupa.kostka.Dice
+            <com.lupa.kostka.objects.Dice
                 android:id="@+id/dice6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-            </com.lupa.kostka.Dice>
+            </com.lupa.kostka.objects.Dice>
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <com.lupa.kostka.DiceValuesCounter
+    <com.lupa.kostka.objects.DiceValuesCounter
         android:id="@+id/valueCounter"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

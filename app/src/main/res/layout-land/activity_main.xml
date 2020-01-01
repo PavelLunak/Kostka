@@ -55,7 +55,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/font_kabanan"
-                android:text="Zavřít"
+                android:text="@string/close"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 

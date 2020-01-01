@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lupa.kostka.Animators;
+import com.lupa.kostka.utils.Animators;
 import com.lupa.kostka.MainActivity;
 import com.lupa.kostka.R;
 import com.lupa.kostka.utils.AppUtils;

@@ -29,7 +29,7 @@
             android:text="PLUS" />
     </LinearLayout>
 
-    <com.lupa.kostka.DiceValuesCounter
+    <com.lupa.kostka.objects.DiceValuesCounter
         android:id="@+id/dvc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

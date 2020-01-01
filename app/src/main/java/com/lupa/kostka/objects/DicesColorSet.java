@@ -3,16 +3,9 @@ package com.lupa.kostka.objects;
 
 import android.util.Log;
 
-public class DicesColorSet {
+import com.lupa.kostka.utils.AppConstants;
 
-    private final int BLACK = 1;
-    private final int WHITE = 2;
-    private final int RED = 3;
-    private final int BLUE = 4;
-    private final int GREEN = 5;
-    private final int YELLOW = 6;
-
-    //-----------------------------------------------------------------
+public class DicesColorSet implements AppConstants {
 
     private int oneDice;
     private int[] twoDice;

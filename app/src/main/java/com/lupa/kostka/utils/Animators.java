@@ -1,12 +1,10 @@
-package com.lupa.kostka;
+package com.lupa.kostka.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.lupa.kostka.listeners.OnAnimationEndListener;
@@ -224,31 +222,6 @@ public class Animators {
         objectAnimatorAlpha.setInterpolator(new LinearInterpolator());
         objectAnimatorAlpha.setDuration(200);
         objectAnimatorAlpha.start();
-    }
-
-    public static void animateCounter(final View view) {
-
-        final ObjectAnimator objectAnimatorScaleX = ObjectAnimator.ofFloat(view, View.SCALE_X, 1.0f, 1.25f, 1.0f);
-        objectAnimatorScaleX.setInterpolator(new LinearInterpolator());
-
-        final ObjectAnimator objectAnimatorScaleY = ObjectAnimator.ofFloat(view, View.SCALE_Y, 1.0f, 1.25f, 1.0f);
-        objectAnimatorScaleY.setInterpolator(new LinearInterpolator());
-
-        final AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(200);
-        animatorSet.playTogether(objectAnimatorScaleX, objectAnimatorScaleY);
-
-        animatorSet.start();
-    }
-
-    public static void showViewAlphaSmoothly(final View view) {
-        if (view == null) return;
-        view.animate().alpha(1f).setDuration(100).start();
-    }
-
-    public static void hideViewAlphaSmoothly(final View view) {
-        if (view == null) return;
-        view.animate().alpha(0f).setDuration(100).start();
     }
 
     public static void showViewScaleSmoothly(final View view, boolean x, boolean y, long startDelay) {

@@ -11,8 +11,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#BDD0E0"
-        app:srcCompat="@drawable/itnetwork_winter_2019_1" />
+        android:background="#BDD0E0" />
 
     <FrameLayout
         android:id="@+id/container"
@@ -56,7 +55,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/font_kabanan"
-                android:text="Zavřít"
+                android:text="@string/close"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 

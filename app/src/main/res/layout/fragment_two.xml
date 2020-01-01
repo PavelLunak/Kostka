@@ -11,25 +11,25 @@
         android:orientation="vertical"
         android:weightSum="2">
 
-        <com.lupa.kostka.Dice
+        <com.lupa.kostka.objects.Dice
             android:id="@+id/dice1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-        </com.lupa.kostka.Dice>
+        </com.lupa.kostka.objects.Dice>
 
-        <com.lupa.kostka.Dice
+        <com.lupa.kostka.objects.Dice
             android:id="@+id/dice2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-        </com.lupa.kostka.Dice>
+        </com.lupa.kostka.objects.Dice>
 
     </LinearLayout>
 
-    <com.lupa.kostka.DiceValuesCounter
+    <com.lupa.kostka.objects.DiceValuesCounter
         android:id="@+id/valueCounter"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

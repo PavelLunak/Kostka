@@ -10,12 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.lupa.kostka.Animators;
-import com.lupa.kostka.Dice;
-import com.lupa.kostka.DiceValuesCounter;
+import com.lupa.kostka.utils.Animators;
+import com.lupa.kostka.objects.Dice;
+import com.lupa.kostka.objects.DiceValuesCounter;
 import com.lupa.kostka.MainActivity;
 import com.lupa.kostka.R;
-import com.lupa.kostka.utils.PrefsUtils;
 
 
 public class FragmentDices extends Fragment implements View.OnClickListener {
@@ -34,7 +33,7 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
                 activity.counter.add(value);
 
                 if (activity.counter.getValuesCount() == activity.dicesCount) {
-                    valueCounter.setValue(activity.counter.getValue(), true);
+                    valueCounter.setValue(true);
                 }
             }
         }
@@ -167,7 +166,7 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
     }
 
     public void startShuffle() {
-        if (valueCounter != null) valueCounter.setValue(0, false);
+        if (valueCounter != null) valueCounter.setValue(false);
 
         dice1.startShuffle();
 
@@ -189,7 +188,7 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
     }
 
     public void stopShuffle() {
-        if (valueCounter != null) valueCounter.setValue(0, false);
+        if (valueCounter != null) valueCounter.setValue(false);
 
         dice1.stopShuffle();
 
@@ -210,9 +209,9 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void setCounter(int value, boolean animate) {
+    public void setCounter(boolean animate) {
         if (valueCounter == null) return;
-        valueCounter.setValue(value, animate);
+        valueCounter.setValue(animate);
     }
 
     public void setDiceColor(int diceNumber, Dice.DiceColor color) {

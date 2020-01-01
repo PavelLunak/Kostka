@@ -19,11 +19,13 @@ import android.widget.Toast;
 import com.lupa.kostka.fragments.FragmentDices;
 import com.lupa.kostka.fragments.FragmentInfo;
 import com.lupa.kostka.fragments.FragmentMain;
-import com.lupa.kostka.fragments.FragmentTest;
 import com.lupa.kostka.listeners.OnAnimationEndListener;
 import com.lupa.kostka.objects.Counter;
+import com.lupa.kostka.objects.Dice;
 import com.lupa.kostka.objects.DicesColorSet;
+import com.lupa.kostka.utils.Animators;
 import com.lupa.kostka.utils.AppConstants;
+import com.lupa.kostka.utils.AppUtils;
 import com.lupa.kostka.utils.PrefsUtils;
 
 public class MainActivity extends AppCompatActivity implements
@@ -34,10 +36,15 @@ public class MainActivity extends AppCompatActivity implements
     int animShowFragment = R.anim.anim_fragment_show;
     int animHideFragment = R.anim.anim_fragment_hide;
 
+    //Pozadí aplikace
     public enum Theme {LIGHT, DARK};
+
     public enum Language {CZ, ENG};
 
+    //Zvolený počet kostek
     public int dicesCount = 1;
+
+    //Objekt pro uložení zvolených barev kostek
     public DicesColorSet dicesColorSet;
 
     FragmentManager fragmentManager;
@@ -54,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements
     boolean introShowed;
     boolean help1Showed;
 
+    //Objekt pro ukládání a sčítání hodnot kostek při míchání
     public Counter counter;
 
     public Theme theme = Theme.DARK;
@@ -61,14 +69,13 @@ public class MainActivity extends AppCompatActivity implements
 
     FragmentDices fragmentDices;
     FragmentInfo fragmentInfo;
-    FragmentTest fragmentTest;
     FragmentMain fragmentMain;
 
+    //Odpočet pro dobu zobrazení úvodního obrázku
     CountDownTimer introTimer;
     long introTimerCounter;
 
-    int value;
-
+    //Počítadlo pro postupný cyklický  výběr barev kostek v sadě
     int dicesColorSelectCounter;
 
 
@@ -128,11 +135,13 @@ public class MainActivity extends AppCompatActivity implements
         viewGreen.setOnClickListener(this);
         viewYellow.setOnClickListener(this);
 
+        //Objekt pro uložení zvolených barev kostek
         dicesColorSet = new DicesColorSet();
 
         language = PrefsUtils.getEngLanguage(this) ? Language.ENG : Language.CZ;
         theme = PrefsUtils.getLightTheme(this) ? Theme.LIGHT : Theme.DARK;
 
+        //Načtení uložených barev kostek v každé sadě
         dicesColorSet.setDiceColorSetFromString(PrefsUtils.getDiceColorSet(this, 1));
         dicesColorSet.setDiceColorSetFromString(PrefsUtils.getDiceColorSet(this, 2));
         dicesColorSet.setDiceColorSetFromString(PrefsUtils.getDiceColorSet(this, 3));
@@ -141,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements
         dicesColorSet.setDiceColorSetFromString(PrefsUtils.getDiceColorSet(this, 6));
 
         if (savedInstanceState != null)
-            dicesCount = savedInstanceState.getInt("dicesCount", 1);
+            dicesCount = savedInstanceState.getInt(PREFS_DICE_COUNT, 1);
 
         fragmentManager.addOnBackStackChangedListener(this);
 
@@ -151,13 +160,12 @@ public class MainActivity extends AppCompatActivity implements
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (settingsColorShowed || settingsShowed) {
-                            if (settingsColorShowed) showSettingsColor(false, true);
                             if (settingsShowed) showSettings(false, true);
                             return true;
                         }
 
                         if (fragmentDices != null) {
-                            if (isFragmentCurrent("FragmentDices", fragmentManager)) {
+                            if (AppUtils.isFragmentCurrent(FRAGMENT_DICE, fragmentManager)) {
                                 counter.clear();
                                 fragmentDices.startShuffle();
                             }
@@ -166,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
                         if (fragmentDices != null) {
-                            if (isFragmentCurrent("FragmentDices", fragmentManager)) {
+                            if (AppUtils.isFragmentCurrent(FRAGMENT_DICE, fragmentManager)) {
                                 counter.clear();
                                 fragmentDices.stopShuffle();
                             }
@@ -185,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements
         if (introTimer != null) introTimer.cancel();
         introTimer = null;
 
+        //Uložení barev kostek
         PrefsUtils.updateDiceColor(
                 this,
                 dicesCount,
@@ -207,10 +216,10 @@ public class MainActivity extends AppCompatActivity implements
             btnSettings.setVisibility(View.GONE);
             introShowed = true;
 
-            introTimer = new CountDownTimer(5000 - introTimerCounter, 200) {
+            introTimer = new CountDownTimer(INTRO_DISPLAY_DELAY - introTimerCounter, 200) {
                 @Override
-                public void onTick(long l) {
-                    introTimerCounter = l;
+                public void onTick(long time) {
+                    introTimerCounter = time;
                 }
 
                 @Override
@@ -218,8 +227,8 @@ public class MainActivity extends AppCompatActivity implements
                     imageView.setVisibility(View.GONE);
                     introTimerCounter = 0;
                     introTimer = null;
-                    btnSettings.setVisibility(View.VISIBLE);
                     showFragmentMain();
+                    btnSettings.setVisibility(View.VISIBLE);
                     Animators.showViewScaleSmoothly(btnSettings, true, true, 100);
                 }
             };
@@ -228,15 +237,14 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             imageView.setVisibility(View.GONE);
             btnSettings.setVisibility(View.VISIBLE);
-            btnSettings.setScaleX(1f);
-            btnSettings.setScaleY(1f);
+            AppUtils.setMaxScale(btnSettings);
         }
 
-        fragmentMain = (FragmentMain) fragmentManager.findFragmentByTag("FragmentMain");
-        fragmentDices = (FragmentDices) fragmentManager.findFragmentByTag("FragmentDices");
-        fragmentInfo = (FragmentInfo) fragmentManager.findFragmentByTag("FragmentInfo");
+        fragmentMain = (FragmentMain) fragmentManager.findFragmentByTag(FRAGMENT_MAIN);
+        fragmentDices = (FragmentDices) fragmentManager.findFragmentByTag(FRAGMENT_DICE);
+        fragmentInfo = (FragmentInfo) fragmentManager.findFragmentByTag(FRAGMENT_INFO);
 
-        if (isFragmentCurrent("FragmentDices", fragmentManager)) {
+        if (AppUtils.isFragmentCurrent(FRAGMENT_DICE, fragmentManager)) {
             layoutClick.setVisibility(View.VISIBLE);
 
             if (PrefsUtils.canShowHelp1(this)) {
@@ -250,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements
             if (dicesCount > 1) {
                 if (counter != null) {
                     if (counter.getValue() > 0) {
-                        fragmentDices.setCounter(counter.getValue(), false);
+                        fragmentDices.setCounter(false);
                     }
                 }
             }
@@ -260,31 +268,29 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("settingsShowed", settingsShowed);
-        outState.putBoolean("settingsColorShowed", settingsColorShowed);
-        outState.putBoolean("settingsLanguageShowed", settingsLanguageShowed);
-        outState.putInt("value", value);
-        outState.putBoolean("introShowed", introShowed);
-        outState.putLong("introTimerCounter", introTimerCounter);
-        outState.putParcelable("counter", counter);
-        outState.putInt("dicesCount", dicesCount);
-        outState.putInt("dicesColorSelectCounter", dicesColorSelectCounter);
-        outState.putBoolean("help1Showed", help1Showed);
+        outState.putBoolean(INSTANCE_STATE_SETTINGS_SHOWED, settingsShowed);
+        outState.putBoolean(INSTANCE_STATE_SETTINGS_COLOR_SHOWED, settingsColorShowed);
+        outState.putBoolean(INSTANCE_STATE_SETTINGS_LANGUAGE_SHOWED, settingsLanguageShowed);
+        outState.putBoolean(INSTANCE_STATE_INTRO_SHOWED, introShowed);
+        outState.putLong(INSTANCE_STATE_INTRO_TIMER_COUNTER, introTimerCounter);
+        outState.putParcelable(INSTANCE_STATE_COUNTER, counter);
+        outState.putInt(INSTANCE_STATE_DICE_COUNT, dicesCount);
+        outState.putInt(INSTANCE_STATE_DICE_COLOR_SELECT_COUNTER, dicesColorSelectCounter);
+        outState.putBoolean(INSTANCE_STATE_HELP1_SHOWED, help1Showed);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        settingsShowed = savedInstanceState.getBoolean("settingsShowed", false);
-        settingsColorShowed = savedInstanceState.getBoolean("settingsColorShowed", false);
-        settingsLanguageShowed = savedInstanceState.getBoolean("settingsLanguageShowed", false);
-        value = savedInstanceState.getInt("value", 0);
-        introShowed = savedInstanceState.getBoolean("introShowed", false);
-        introTimerCounter = savedInstanceState.getLong("introTimerCounter", 0);
-        counter = savedInstanceState.getParcelable("counter");
-        dicesCount = savedInstanceState.getInt("dicesCount", 1);
-        dicesColorSelectCounter = savedInstanceState.getInt("dicesColorSelectCounter", 0);
-        help1Showed = savedInstanceState.getBoolean("help1Showed", false);
+        settingsShowed = savedInstanceState.getBoolean(INSTANCE_STATE_SETTINGS_SHOWED, false);
+        settingsColorShowed = savedInstanceState.getBoolean(INSTANCE_STATE_SETTINGS_COLOR_SHOWED, false);
+        settingsLanguageShowed = savedInstanceState.getBoolean(INSTANCE_STATE_SETTINGS_LANGUAGE_SHOWED, false);
+        introShowed = savedInstanceState.getBoolean(INSTANCE_STATE_INTRO_SHOWED, false);
+        introTimerCounter = savedInstanceState.getLong(INSTANCE_STATE_INTRO_TIMER_COUNTER, 0);
+        counter = savedInstanceState.getParcelable(INSTANCE_STATE_COUNTER);
+        dicesCount = savedInstanceState.getInt(INSTANCE_STATE_DICE_COUNT, 1);
+        dicesColorSelectCounter = savedInstanceState.getInt(INSTANCE_STATE_DICE_COLOR_SELECT_COUNTER, 0);
+        help1Showed = savedInstanceState.getBoolean(INSTANCE_STATE_HELP1_SHOWED, false);
     }
 
     @Override
@@ -309,23 +315,20 @@ public class MainActivity extends AppCompatActivity implements
             introTimer.cancel();
             introTimer = null;
             introTimerCounter = 0;
-            btnSettings.setVisibility(View.VISIBLE);
             showFragmentMain();
+            btnSettings.setVisibility(View.VISIBLE);
             Animators.showViewScaleSmoothly(btnSettings, true, true, 100);
             return;
         }
 
-        int fragmentsInStack = fragmentManager.getBackStackEntryCount();
-        if (fragmentsInStack == 1) finish();
+        if (fragmentManager.getBackStackEntryCount() == 1) finish();
 
         super.onBackPressed();
     }
 
     @Override
     public void onBackStackChanged() {
-        int fragmentsInStack = fragmentManager.getBackStackEntryCount();
-
-        if (isFragmentCurrent("FragmentDices", fragmentManager)) {
+        if (AppUtils.isFragmentCurrent(FRAGMENT_DICE, fragmentManager)) {
             layoutClick.setVisibility(View.VISIBLE);
 
             if (PrefsUtils.canShowHelp1(this)) {
@@ -351,6 +354,7 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         if (settingsLanguageShowed &&
+                view.getId() != R.id.imgLanguage &&
                 view.getId() != R.id.imgCz &&
                 view.getId() != R.id.imgEng) {
 
@@ -375,17 +379,13 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.imgTheme:
                 Animators.animateButtonClick2(imgTheme, 1f);
                 switchTheme();
-
-                SharedPreferences pref = getSharedPreferences("DicePref", MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putBoolean("isLightTheme", isLightTheme());
-                editor.commit();
-
+                PrefsUtils.updateTheme(this, isLightTheme());
                 updateTheme();
                 break;
             case R.id.imgColor:
                 Animators.animateButtonClick2(imgColor, 1f);
-                if (!isFragmentCurrent("FragmentDices", fragmentManager)) {
+
+                if (!AppUtils.isFragmentCurrent(FRAGMENT_DICE, fragmentManager)) {
                     Toast.makeText(
                             MainActivity.this,
                             getResources().getString(
@@ -410,19 +410,20 @@ public class MainActivity extends AppCompatActivity implements
                 finish();
                 break;
             case R.id.imgCz:
-                Animators.animateButtonClick2(imgCz, 0.5f);
+                Animators.animateButtonClick2(imgCz, LANGUAGE_FLAG_MAX_ALPHA);
                 setLanguage(Language.CZ);
-                imgCz.setAlpha(0.5f);
+                imgCz.setAlpha(LANGUAGE_FLAG_MAX_ALPHA);
                 showSettingsLanguage(false, true);
                 break;
             case R.id.imgEng:
-                Animators.animateButtonClick2(imgEng, 0.5f);
+                Animators.animateButtonClick2(imgEng, LANGUAGE_FLAG_MAX_ALPHA);
                 setLanguage(Language.ENG);
-                imgEng.setAlpha(0.5f);
+                imgEng.setAlpha(LANGUAGE_FLAG_MAX_ALPHA);
                 showSettingsLanguage(false, true);
                 break;
             case R.id.viewBlack:
-                Animators.animateButtonClick2(viewBlack, 0.5f);
+                Animators.animateButtonClick2(viewBlack, LANGUAGE_FLAG_MAX_ALPHA);
+
                 if (fragmentDices != null) {
                     fragmentDices.setDiceColor(incrementDicesColorSelectCounter(), Dice.DiceColor.BLACK);
                     dicesColorSet.setDiceItemColor(dicesCount, dicesColorSelectCounter - 1, BLACK);
@@ -488,8 +489,7 @@ public class MainActivity extends AppCompatActivity implements
                     @Override
                     public void onAnimationEnd() {
                         layoutInfo1.setVisibility(View.GONE);
-                        layoutInfo1.setScaleX(0);
-                        layoutInfo1.setScaleY(0);
+                        AppUtils.setMinScale(layoutInfo1);
 
                     }
                 });
@@ -500,91 +500,83 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void showFragmentMain() {
-        fragmentMain = (FragmentMain) fragmentManager.findFragmentByTag("FragmentMain");
+        fragmentMain = (FragmentMain) fragmentManager.findFragmentByTag(FRAGMENT_MAIN);
 
         if (fragmentMain == null) {
             fragmentMain = new FragmentMain();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(animShowFragment, animHideFragment, animShowFragment, animHideFragment);
-            fragmentTransaction.add(R.id.container, fragmentMain, "FragmentMain");
-            fragmentTransaction.addToBackStack("FragmentMain");
+            fragmentTransaction.add(R.id.container, fragmentMain, FRAGMENT_MAIN);
+            fragmentTransaction.addToBackStack(FRAGMENT_MAIN);
             fragmentTransaction.commit();
         } else {
             int beCount = fragmentManager.getBackStackEntryCount();
             if (beCount == 0) return;
-            fragmentManager.popBackStack("FragmentMain", 0);
+            fragmentManager.popBackStack(FRAGMENT_MAIN, 0);
         }
     }
 
     public void showFragmentDices() {
-        fragmentDices = (FragmentDices) fragmentManager.findFragmentByTag("FragmentDices");
+        fragmentDices = (FragmentDices) fragmentManager.findFragmentByTag(FRAGMENT_DICE);
 
         if (fragmentDices == null) {
             fragmentDices = new FragmentDices();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(animShowFragment, animHideFragment, animShowFragment, animHideFragment);
-            fragmentTransaction.add(R.id.container, fragmentDices, "FragmentDices");
-            fragmentTransaction.addToBackStack("FragmentDices");
+            fragmentTransaction.add(R.id.container, fragmentDices, FRAGMENT_DICE);
+            fragmentTransaction.addToBackStack(FRAGMENT_DICE);
             fragmentTransaction.commit();
         } else {
             int beCount = fragmentManager.getBackStackEntryCount();
             if (beCount == 0) return;
-            fragmentManager.popBackStack("FragmentDices", 0);
+            fragmentManager.popBackStack(FRAGMENT_DICE, 0);
         }
     }
 
     public void showFragmentInfo() {
-        fragmentInfo = (FragmentInfo) fragmentManager.findFragmentByTag("FragmentInfo");
+        fragmentInfo = (FragmentInfo) fragmentManager.findFragmentByTag(FRAGMENT_INFO);
 
         if (fragmentInfo == null) {
             fragmentInfo = new FragmentInfo();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(animShowFragment, animHideFragment, animShowFragment, animHideFragment);
-            fragmentTransaction.add(R.id.container, fragmentInfo, "FragmentInfo");
-            fragmentTransaction.addToBackStack("FragmentInfo");
+            fragmentTransaction.add(R.id.container, fragmentInfo, FRAGMENT_INFO);
+            fragmentTransaction.addToBackStack(FRAGMENT_INFO);
             fragmentTransaction.commit();
         } else {
             int beCount = fragmentManager.getBackStackEntryCount();
             if (beCount == 0) return;
-            fragmentManager.popBackStack("FragmentInfo", 0);
+            fragmentManager.popBackStack(FRAGMENT_INFO, 0);
         }
-    }
-
-    public boolean isFragmentCurrent(String name, FragmentManager fragmentManager) {
-        if (fragmentManager.getBackStackEntryCount() != 0) {
-            FragmentManager.BackStackEntry be = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
-            return be.getName().equals(name);
-        }
-        return false;
     }
 
     private void updateTheme() {
         if (isLightTheme()) {
             root.setBackgroundColor(getResources().getColor(R.color.colorBackgroundLight));
-            imgSettings.setImageDrawable(getResources().getDrawable(R.drawable.ic_settings_dark, getTheme()));
-            layoutSettings.setBackground(getResources().getDrawable(R.drawable.bg_layout_settings_dark, getTheme()));
-            layoutColor.setBackground(getResources().getDrawable(R.drawable.bg_layout_settings_dark, getTheme()));
-            layoutLanguage.setBackground(getResources().getDrawable(R.drawable.bg_layout_settings_dark, getTheme()));
-            imgClose.setImageDrawable(getResources().getDrawable(R.drawable.ic_power_light, getTheme()));
-            imgInfo.setImageDrawable(getResources().getDrawable(R.drawable.ic_info_light, getTheme()));
-            imgTheme.setImageDrawable(getResources().getDrawable(R.drawable.ic_brightness_light, getTheme()));
-            imgColor.setImageDrawable(getResources().getDrawable(R.drawable.ic_color_light, getTheme()));
-            imgLanguage.setImageDrawable(getResources().getDrawable(R.drawable.ic_language_light, getTheme()));
+            AppUtils.setImage(this, imgSettings, R.drawable.ic_settings_dark);
+            layoutSettings.setBackground(AppUtils.getDrawableBySdk(this, R.drawable.bg_layout_settings_dark));
+            layoutColor.setBackground(AppUtils.getDrawableBySdk(this, R.drawable.bg_layout_settings_dark));
+            layoutLanguage.setBackground(AppUtils.getDrawableBySdk(this, R.drawable.bg_layout_settings_dark));
+            AppUtils.setImage(this, imgClose, R.drawable.ic_power_light);
+            AppUtils.setImage(this, imgInfo, R.drawable.ic_info_light);
+            AppUtils.setImage(this, imgTheme, R.drawable.ic_brightness_light);
+            AppUtils.setImage(this, imgColor, R.drawable.ic_color_light);
+            AppUtils.setImage(this, imgLanguage, R.drawable.ic_language_light);
 
             if (fragmentMain != null) fragmentMain.setColor(Theme.LIGHT);
             if (fragmentDices != null) fragmentDices.setColor(Theme.LIGHT);
             if (fragmentInfo != null) fragmentInfo.setColor(Theme.LIGHT);
         } else {
             root.setBackgroundColor(getResources().getColor(R.color.colorBackgroundDark));
-            imgSettings.setImageDrawable(getResources().getDrawable(R.drawable.ic_settings, getTheme()));
-            layoutSettings.setBackground(getResources().getDrawable(R.drawable.bg_layout_settings, getTheme()));
-            layoutColor.setBackground(getResources().getDrawable(R.drawable.bg_layout_settings, getTheme()));
-            layoutLanguage.setBackground(getResources().getDrawable(R.drawable.bg_layout_settings, getTheme()));
-            imgClose.setImageDrawable(getResources().getDrawable(R.drawable.ic_power, getTheme()));
-            imgInfo.setImageDrawable(getResources().getDrawable(R.drawable.ic_info, getTheme()));
-            imgTheme.setImageDrawable(getResources().getDrawable(R.drawable.ic_brightness, getTheme()));
-            imgColor.setImageDrawable(getResources().getDrawable(R.drawable.ic_color, getTheme()));
-            imgLanguage.setImageDrawable(getResources().getDrawable(R.drawable.ic_language, getTheme()));
+            AppUtils.setImage(this, imgSettings, R.drawable.ic_settings);
+            layoutSettings.setBackground(AppUtils.getDrawableBySdk(this, R.drawable.bg_layout_settings));
+            layoutColor.setBackground(AppUtils.getDrawableBySdk(this, R.drawable.bg_layout_settings));
+            layoutLanguage.setBackground(AppUtils.getDrawableBySdk(this, R.drawable.bg_layout_settings));
+            AppUtils.setImage(this, imgClose, R.drawable.ic_power);
+            AppUtils.setImage(this, imgInfo, R.drawable.ic_info);
+            AppUtils.setImage(this, imgTheme, R.drawable.ic_brightness);
+            AppUtils.setImage(this, imgColor, R.drawable.ic_color);
+            AppUtils.setImage(this, imgLanguage, R.drawable.ic_language);
 
             if (fragmentMain != null) fragmentMain.setColor(Theme.DARK);
             if (fragmentDices != null) fragmentDices.setColor(Theme.DARK);
@@ -603,13 +595,11 @@ public class MainActivity extends AppCompatActivity implements
                 Animators.animateShowLayoutSettings(layoutSettingsRoot, new OnAnimationEndListener() {
                     @Override
                     public void onAnimationEnd() {
-                        layoutSettingsRoot.setScaleX(1.0f);
-                        layoutSettingsRoot.setScaleY(1.0f);
+                        AppUtils.setMaxScale(layoutSettingsRoot);
                     }
                 });
             } else {
-                layoutSettingsRoot.setScaleX(1.0f);
-                layoutSettingsRoot.setScaleY(1.0f);
+                AppUtils.setMaxScale(layoutSettingsRoot);
                 layoutSettingsRoot.setVisibility(View.VISIBLE);
             }
         } else {
@@ -622,21 +612,19 @@ public class MainActivity extends AppCompatActivity implements
                 Animators.animateHideLayoutSettings(layoutSettingsRoot, new OnAnimationEndListener() {
                     @Override
                     public void onAnimationEnd() {
-                        layoutSettingsRoot.setScaleX(0.0f);
-                        layoutSettingsRoot.setScaleY(0.0f);
+                        AppUtils.setMinScale(layoutSettingsRoot);
                         layoutSettingsRoot.setVisibility(View.GONE);
                     }
                 });
             } else {
                 layoutSettingsRoot.setVisibility(View.GONE);
-                layoutSettingsRoot.setScaleX(0.0f);
-                layoutSettingsRoot.setScaleY(0.0f);
+                AppUtils.setMinScale(layoutSettingsRoot);
             }
         }
     }
 
     public void showSettingsColor(boolean show, boolean animate) {
-        if (!isFragmentCurrent("FragmentDices", fragmentManager)) return;
+        if (!AppUtils.isFragmentCurrent("FragmentDices", fragmentManager)) return;
 
         if (show) {
             settingsColorShowed = true;
@@ -686,8 +674,8 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 });
             } else {
-                layoutLanguage.setScaleX(1.0f);
                 layoutLanguage.setVisibility(View.VISIBLE);
+                layoutLanguage.setScaleX(1.0f);
             }
         } else {
             settingsLanguageShowed = false;
@@ -716,13 +704,11 @@ public class MainActivity extends AppCompatActivity implements
                 Animators.animateShowLayoutSettings(layoutInfo1, new OnAnimationEndListener() {
                     @Override
                     public void onAnimationEnd() {
-                        layoutInfo1.setScaleX(1f);
-                        layoutInfo1.setScaleY(1f);
+                        AppUtils.setMaxScale(layoutInfo1);
                     }
                 });
             } else {
-                layoutInfo1.setScaleX(1f);
-                layoutInfo1.setScaleY(1f);
+                AppUtils.setMaxScale(layoutInfo1);
             }
         } else {
             help1Showed = true;
@@ -731,14 +717,12 @@ public class MainActivity extends AppCompatActivity implements
                 Animators.animateHideLayoutSettings(layoutInfo1, new OnAnimationEndListener() {
                     @Override
                     public void onAnimationEnd() {
-                        layoutInfo1.setScaleX(1f);
-                        layoutInfo1.setScaleY(1f);
+                        AppUtils.setMaxScale(layoutInfo1);
                         layoutInfo1.setVisibility(View.GONE);
                     }
                 });
             } else {
-                layoutInfo1.setScaleX(1f);
-                layoutInfo1.setScaleY(1f);
+                AppUtils.setMaxScale(layoutInfo1);
                 layoutInfo1.setVisibility(View.GONE);
             }
         }
@@ -752,7 +736,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void switchTheme() {
-        if (theme == Theme.LIGHT) theme = Theme.DARK;
+        if (isLightTheme()) theme = Theme.DARK;
         else theme = Theme.LIGHT;
     }
 
@@ -760,17 +744,17 @@ public class MainActivity extends AppCompatActivity implements
         return theme == Theme.LIGHT;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public void setLanguage(Language language) {
         this.language = language;
         PrefsUtils.updateLanguage(this, language);
+
+        if (language == MainActivity.Language.CZ) {
+            labelInfo1.setText(getResources().getString(R.string.text_help_1_cz));
+            labelClose.setText(getResources().getString(R.string.close_cz));
+        } else {
+            labelInfo1.setText(getResources().getString(R.string.text_help_1));
+            labelClose.setText(getResources().getString(R.string.close));
+        }
 
         if (fragmentMain != null) {
             fragmentMain.updateLanguage();
@@ -784,11 +768,9 @@ public class MainActivity extends AppCompatActivity implements
 
     public void updateImage() {
         if (language == MainActivity.Language.CZ) {
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.itnetwork_winter_2019, getTheme()));
-            labelInfo1.setText(getResources().getString(R.string.text_help_1_cz));
+            AppUtils.setImage(this, imageView, R.drawable.itnetwork_winter_2019);
         } else {
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.itnetwork_winter_2019_1, getTheme()));
-            labelInfo1.setText(getResources().getString(R.string.text_help_1));
+            AppUtils.setImage(this, imageView, R.drawable.itnetwork_winter_2019_1);
         }
     }
 }

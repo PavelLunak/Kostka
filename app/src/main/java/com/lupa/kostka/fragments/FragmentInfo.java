@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lupa.kostka.Animators;
+import com.lupa.kostka.utils.Animators;
 import com.lupa.kostka.MainActivity;
 import com.lupa.kostka.R;
 import com.lupa.kostka.utils.AppUtils;
@@ -128,8 +128,11 @@ public class FragmentInfo extends Fragment implements View.OnClickListener {
     }
 
     public void updateImage() {
-        if (activity.language == MainActivity.Language.CZ) imageView6.setImageDrawable(activity.getResources().getDrawable(R.drawable.itnetwork_winter_2019));
-        else imageView6.setImageDrawable(activity.getResources().getDrawable(R.drawable.itnetwork_winter_2019_1, activity.getTheme()));
+        if (activity.language == MainActivity.Language.CZ) {
+            AppUtils.setImage(activity, imageView6, R.drawable.itnetwork_winter_2019);
+        } else {
+            AppUtils.setImage(activity, imageView6, R.drawable.itnetwork_winter_2019_1);
+        }
     }
 
     @Override
