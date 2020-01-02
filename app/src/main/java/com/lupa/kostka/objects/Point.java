@@ -1,4 +1,4 @@
-package com.lupa.kostka;
+package com.lupa.kostka.objects;
 
 public class Point {
 

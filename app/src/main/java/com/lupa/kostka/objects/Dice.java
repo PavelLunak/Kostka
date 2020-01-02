@@ -1,4 +1,4 @@
-package com.lupa.kostka;
+package com.lupa.kostka.objects;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,12 +7,17 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.lupa.kostka.R;
+import com.lupa.kostka.utils.AppConstants;
 
 import java.util.Random;
 
@@ -24,30 +29,30 @@ public class Dice extends View {
     int width;
     int height;
 
-    int centerOfGraphX;
-    int centerOfGraphY;
+    int centerX;
+    int centerY;
 
-    int diceEdgeLength;
-    int sideCircleRadius;
-    int sideCircleSeenRadius;
-    int prepona;
-    int diceMargin;
-    int leftRightPointIndent;
-    int topBottomPointIndent;
+    int diceEdgeLength;                 //Délka hrany kostky
+    int sideCircleRadius;               //Poloměr kruhové části, ve které jsou tečky
+    int sideCircleSeenRadius;           //Poloměr kruhové části pro lesk
+    int diagonal;                       //Úhlopříčka strany kostky
+    int diceMargin;                     //Minimální odsazení kostky od okrajů
+    int leftRightPointIndent;           //Odsazení teček vlevo a vpravo
+    int topBottomPointIndent;           //Odsazení teček nahoře a dole
 
-    int pointRadius;
+    int pointRadius;                    //Poloměr teček
     Point[] points;
 
-    private Paint paintDice = new Paint();
-    private Paint paintDice2 = new Paint();
-    private Paint paintPointSheen = new Paint();
-    private Paint paintCircleSheen = new Paint();
+    private Paint paintDice = new Paint();          //Hlavní barva kostky
+    private Paint paintDice2 = new Paint();         //Barva kostky s gradientem do stínu (rohy)
+    private Paint paintPointSheen = new Paint();    //Lesk
+    private Paint paintCircleSheen = new Paint();   //Lesk
 
-    int number = 6;
-    CountDownTimer countDownTimer;
-    boolean isShuffle;
+    int number = 6;                     //Zobrazená hodnota kostky
+    CountDownTimer countDownTimer;      //Odpočet do konce míchání kostky
+    boolean isShuffle;                  //TRUE = právě probíhá míchání kostky
 
-    OnDiceShuffledListener listener;
+    OnDiceShuffledListener listener;    //listener ukončení míchání kostky
 
 
     public Dice(Context context) {
@@ -65,6 +70,7 @@ public class Dice extends View {
         setNumber(6);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public Dice(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         setNumber(6);
@@ -78,30 +84,30 @@ public class Dice extends View {
     private void initPoints() {
         points = new Point[7];
         points[0] = new Point(
-                centerOfGraphX - (diceEdgeLength / 2) + pointRadius + leftRightPointIndent,
-                centerOfGraphY - (diceEdgeLength / 2) + pointRadius + topBottomPointIndent);
+                centerX - (diceEdgeLength / 2) + pointRadius + leftRightPointIndent,
+                centerY - (diceEdgeLength / 2) + pointRadius + topBottomPointIndent);
 
         points[1] = new Point(
-                centerOfGraphX - (diceEdgeLength / 2) + pointRadius + leftRightPointIndent,
-                centerOfGraphY);
+                centerX - (diceEdgeLength / 2) + pointRadius + leftRightPointIndent,
+                centerY);
 
         points[2] = new Point(
-                centerOfGraphX - (diceEdgeLength / 2) + pointRadius + leftRightPointIndent,
-                centerOfGraphY + (diceEdgeLength / 2) - pointRadius - topBottomPointIndent);
+                centerX - (diceEdgeLength / 2) + pointRadius + leftRightPointIndent,
+                centerY + (diceEdgeLength / 2) - pointRadius - topBottomPointIndent);
 
-        points[3] = new Point(centerOfGraphX, centerOfGraphY);
+        points[3] = new Point(centerX, centerY);
 
         points[4] = new Point(
-                centerOfGraphX + (diceEdgeLength / 2) - pointRadius - leftRightPointIndent,
-                centerOfGraphY - (diceEdgeLength / 2) + pointRadius + topBottomPointIndent);
+                centerX + (diceEdgeLength / 2) - pointRadius - leftRightPointIndent,
+                centerY - (diceEdgeLength / 2) + pointRadius + topBottomPointIndent);
 
         points[5] = new Point(
-                centerOfGraphX + (diceEdgeLength / 2) - pointRadius - leftRightPointIndent,
-                centerOfGraphY);
+                centerX + (diceEdgeLength / 2) - pointRadius - leftRightPointIndent,
+                centerY);
 
         points[6] = new Point(
-                centerOfGraphX + (diceEdgeLength / 2) - pointRadius - leftRightPointIndent,
-                centerOfGraphY + (diceEdgeLength / 2) - pointRadius - topBottomPointIndent);
+                centerX + (diceEdgeLength / 2) - pointRadius - leftRightPointIndent,
+                centerY + (diceEdgeLength / 2) - pointRadius - topBottomPointIndent);
     }
 
     private void showPoints(Canvas canvas, int number) {
@@ -176,11 +182,11 @@ public class Dice extends View {
 
         int lessSize = Math.min(width, height);
 
-        centerOfGraphX = width / 2;
-        centerOfGraphY = height / 2;
+        centerX = width / 2;
+        centerY = height / 2;
         diceMargin = (int) ((float) lessSize * 0.1f);
         diceEdgeLength = Math.min(width, height) - (2 * diceMargin);
-        prepona = (int) (Math.sqrt(Math.pow((double) diceEdgeLength / 2, 2) + Math.pow((double) diceEdgeLength / 2, 2)));
+        diagonal = (int) (Math.sqrt(Math.pow((double) diceEdgeLength / 2, 2) + Math.pow((double) diceEdgeLength / 2, 2)));
         pointRadius = (int) ((float) diceEdgeLength * 0.1);
         leftRightPointIndent = (int) ((float) pointRadius * 2 * 0.9f);
         topBottomPointIndent = (int) ((float) pointRadius * 2 * 0.9f);
@@ -202,26 +208,11 @@ public class Dice extends View {
         paintCircleSheen.setAntiAlias(true);
         paintCircleSheen.setStyle(Paint.Style.FILL);
 
-        /*
         paintCircleSheen.setShader(new LinearGradient(
-                centerOfGraphX,
-                centerOfGraphY,
-                centerOfGraphX + sideCircleSeenRadius,
-                centerOfGraphY,
-                new int[]{
-                        getContext().getResources().getColor(diceColor == DiceColor.LIGHT ? R.color.diceColorWhite : R.color.diceColorBlack),
-                        getContext().getResources().getColor(diceColor == DiceColor.LIGHT ? R.color.colorWhite : R.color.colorGray)},
-                new float[]{
-                        0.7f,
-                        1f},
-                Shader.TileMode.CLAMP));
-        */
-
-        paintCircleSheen.setShader(new LinearGradient(
-                centerOfGraphX,
-                centerOfGraphY,
-                centerOfGraphX + sideCircleSeenRadius,
-                centerOfGraphY,
+                centerX,
+                centerY,
+                centerX + sideCircleSeenRadius,
+                centerY,
                 new int[]{
                         getDiceColor1(diceColor),
                         getContext().getResources().getColor(R.color.colorWhite)},
@@ -238,9 +229,9 @@ public class Dice extends View {
         paintDice2.setStyle(Paint.Style.FILL);
 
         paintDice2.setShader(new RadialGradient(
-                centerOfGraphX,
-                centerOfGraphY,
-                prepona,
+                centerX,
+                centerY,
+                diagonal,
                 new int[]{
                         getDiceColor1(diceColor),
                         getDiceColor2(diceColor)},
@@ -251,16 +242,15 @@ public class Dice extends View {
 
         initPoints();
 
-        canvas.drawRoundRect(centerOfGraphX - (diceEdgeLength / 2),
-                centerOfGraphY - (diceEdgeLength / 2),
-                centerOfGraphX + (diceEdgeLength / 2),
-                centerOfGraphY + (diceEdgeLength / 2),
-                70,
-                70,
-                paintDice2);
+        RectF rectf= new RectF(
+                centerX - (diceEdgeLength / 2),
+                centerY - (diceEdgeLength / 2),
+                centerX + (diceEdgeLength / 2),
+                centerY + (diceEdgeLength / 2));
+        canvas.drawRoundRect(rectf,70, 70, paintDice2);
 
-        canvas.drawCircle(centerOfGraphX, centerOfGraphY, sideCircleSeenRadius, paintCircleSheen);
-        canvas.drawCircle(centerOfGraphX, centerOfGraphY, sideCircleRadius, paintDice);
+        canvas.drawCircle(centerX, centerY, sideCircleSeenRadius, paintCircleSheen);
+        canvas.drawCircle(centerX, centerY, sideCircleRadius, paintDice);
 
         showPoints(canvas, this.number);
     }
@@ -271,7 +261,7 @@ public class Dice extends View {
 
         if (countDownTimer != null) countDownTimer.cancel();
 
-        countDownTimer = new CountDownTimer(random.nextInt(1200) + 10, 10) {
+        countDownTimer = new CountDownTimer(random.nextInt(AppConstants.MAX_SHUFFLE_DELAY) + 10, 10) {
             @Override
             public void onTick(long l) {
                 number = random.nextInt(6) + 1;
@@ -284,7 +274,6 @@ public class Dice extends View {
                     startShuffle();
                 } else {
                     setNumber(number);
-
                     countDownTimer = null;
 
                     if (listener != null)

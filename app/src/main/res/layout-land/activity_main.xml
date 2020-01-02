@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_kabanan"
                 android:gravity="center_horizontal"
-                android:text="Pro zamíchání kostek klikni na displej. Dokud budeš držet prst na displeji, budou se kostky míchat."
+                android:text="@string/text_help_1"
                 android:textSize="24sp" />
 
             <TextView

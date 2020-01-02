@@ -12,4 +12,5 @@
         android:layout_height="match_parent"
         android:background="#BDD0E0"
         app:srcCompat="@drawable/itnetwork_winter_2019_1" />
+
 </RelativeLayout>
