@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements
     //Počítadlo pro postupný cyklický  výběr barev kostek v sadě
     int dicesColorSelectCounter;
 
+    boolean isSavedInstanceState;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,8 +151,10 @@ public class MainActivity extends AppCompatActivity implements
         dicesColorSet.setDiceColorSetFromString(PrefsUtils.getDiceColorSet(this, 5));
         dicesColorSet.setDiceColorSetFromString(PrefsUtils.getDiceColorSet(this, 6));
 
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             dicesCount = savedInstanceState.getInt(PREFS_DICE_COUNT, 1);
+            isSavedInstanceState = true;
+        }
 
         fragmentManager.addOnBackStackChangedListener(this);
 
@@ -243,6 +247,14 @@ public class MainActivity extends AppCompatActivity implements
         fragmentMain = (FragmentMain) fragmentManager.findFragmentByTag(FRAGMENT_MAIN);
         fragmentDices = (FragmentDices) fragmentManager.findFragmentByTag(FRAGMENT_DICE);
         fragmentInfo = (FragmentInfo) fragmentManager.findFragmentByTag(FRAGMENT_INFO);
+
+        if (isSavedInstanceState) {
+            if (fragmentDices != null) {
+                if (fragmentDices.getValueCounter() != null) {
+                    fragmentDices.getValueCounter().setAfterRestoreInstanceState();
+                }
+            }
+        }
 
         if (AppUtils.isFragmentCurrent(FRAGMENT_DICE, fragmentManager)) {
             layoutClick.setVisibility(View.VISIBLE);

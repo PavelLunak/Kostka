@@ -209,6 +209,10 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
         }
     }
 
+    public DiceValuesCounter getValueCounter() {
+        return valueCounter;
+    }
+
     public void setCounter(boolean animate) {
         if (valueCounter == null) return;
         valueCounter.setValue(animate);
