@@ -260,4 +260,41 @@ public class Animators {
 
         animatorSet.start();
     }
+
+    public static void hideViewScaleSmoothly(final View view, boolean x, boolean y, long startDelay) {
+        ObjectAnimator objectAnimatorScaleX = ObjectAnimator.ofFloat(view, View.SCALE_X, 1.0f, 0.0f);
+        objectAnimatorScaleX.setInterpolator(new LinearInterpolator());
+        objectAnimatorScaleX.setRepeatMode(ObjectAnimator.REVERSE);
+
+        ObjectAnimator objectAnimatorScaleY = ObjectAnimator.ofFloat(view, View.SCALE_Y, 1.0f, 0.0f);
+        objectAnimatorScaleY.setInterpolator(new AccelerateInterpolator());
+        objectAnimatorScaleY.setRepeatMode(ObjectAnimator.REVERSE);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(200);
+        animatorSet.setStartDelay(startDelay);
+
+        if (x && y) animatorSet.playTogether(objectAnimatorScaleX, objectAnimatorScaleY);
+        else if (x && !y) animatorSet.play(objectAnimatorScaleX);
+        else if (!x && y) animatorSet.play(objectAnimatorScaleY);
+
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                view.setScaleX(0f);
+                view.setScaleY(0f);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+                view.setScaleX(0f);
+                view.setScaleY(0f);
+            }
+
+            @Override public void onAnimationStart(Animator animator) {}
+            @Override public void onAnimationRepeat(Animator animator) {}
+        });
+
+        animatorSet.start();
+    }
 }

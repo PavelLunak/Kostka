@@ -1,5 +1,6 @@
 package com.lupa.kostka;
 
+import android.animation.AnimatorSet;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements
     FrameLayout container, layoutClick;
     RelativeLayout root, layoutSettings, layoutSettingsRoot, layoutColor, layoutInfo1;
     LinearLayout btnSettings, layoutLanguage;
-    ImageView imgSettings, imgTheme, imgColor, imgLanguage, imgInfo, imgClose, imageView, imgCz, imgEng;
+    ImageView imgSettings, imgTheme, imgColor, imgLanguage, imgInfo, imgClose, imageView,
+            imgCz, imgEng, imgCheckCz, imgCheckEng;
     View viewBlack, viewWhite, viewRed, viewBlue, viewGreen, viewYellow;
     TextView labelInfo1, labelClose;
 
@@ -109,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements
         imgClose = findViewById(R.id.imgClose);
         imgCz = findViewById(R.id.imgCz);
         imgEng = findViewById(R.id.imgEng);
+        imgCheckCz = findViewById(R.id.imgCheckCz);
+        imgCheckEng = findViewById(R.id.imgCheckEng);
         viewBlack = findViewById(R.id.viewBlack);
         viewWhite = findViewById(R.id.viewWhite);
         viewRed = findViewById(R.id.viewRed);
@@ -377,9 +381,10 @@ public class MainActivity extends AppCompatActivity implements
         if (settingsShowed
                 && !settingsColorShowed
                 && !settingsLanguageShowed
-                && (view.getId() != R.id.btnSettings
+                && view.getId() != R.id.imgTheme
+                && view.getId() != R.id.btnSettings
                 && view.getId() != R.id.imgColor
-                && view.getId() != R.id.imgLanguage)) {
+                && view.getId() != R.id.imgLanguage) {
 
             showSettings(false, true);
         }
@@ -423,15 +428,25 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.imgCz:
                 Animators.animateButtonClick2(imgCz, LANGUAGE_FLAG_MAX_ALPHA);
+
+                if (this.language == Language.ENG) {
+                    Animators.showViewScaleSmoothly(imgCheckCz, true, true, 0);
+                    Animators.hideViewScaleSmoothly(imgCheckEng, true, true, 0);
+                }
+
                 setLanguage(Language.CZ);
                 imgCz.setAlpha(LANGUAGE_FLAG_MAX_ALPHA);
-                showSettingsLanguage(false, true);
                 break;
             case R.id.imgEng:
                 Animators.animateButtonClick2(imgEng, LANGUAGE_FLAG_MAX_ALPHA);
+
+                if (this.language == Language.CZ) {
+                    Animators.showViewScaleSmoothly(imgCheckEng, true, true, 0);
+                    Animators.hideViewScaleSmoothly(imgCheckCz, true, true, 0);;
+                }
+
                 setLanguage(Language.ENG);
                 imgEng.setAlpha(LANGUAGE_FLAG_MAX_ALPHA);
-                showSettingsLanguage(false, true);
                 break;
             case R.id.viewBlack:
                 Animators.animateButtonClick2(viewBlack, LANGUAGE_FLAG_MAX_ALPHA);
@@ -441,8 +456,7 @@ public class MainActivity extends AppCompatActivity implements
                     dicesColorSet.setDiceItemColor(dicesCount, dicesColorSelectCounter - 1, BLACK);
                 }
 
-                if (dicesCount < 2)
-                    showSettingsColor(false, true);
+                //if (dicesCount < 2) showSettingsColor(false, true);
                 break;
             case R.id.viewWhite:
                 Animators.animateButtonClick2(viewWhite, 1f);
@@ -451,8 +465,7 @@ public class MainActivity extends AppCompatActivity implements
                     dicesColorSet.setDiceItemColor(dicesCount, dicesColorSelectCounter - 1, WHITE);
                 }
 
-                if (dicesCount < 2)
-                    showSettingsColor(false, true);
+                //if (dicesCount < 2) showSettingsColor(false, true);
                 break;
             case R.id.viewRed:
                 Animators.animateButtonClick2(viewRed, 1f);
@@ -461,8 +474,7 @@ public class MainActivity extends AppCompatActivity implements
                     dicesColorSet.setDiceItemColor(dicesCount, dicesColorSelectCounter - 1, RED);
                 }
 
-                if (dicesCount < 2)
-                    showSettingsColor(false, true);
+                //if (dicesCount < 2) showSettingsColor(false, true);
                 break;
             case R.id.viewBlue:
                 Animators.animateButtonClick2(viewBlue, 1f);
@@ -471,8 +483,7 @@ public class MainActivity extends AppCompatActivity implements
                     dicesColorSet.setDiceItemColor(dicesCount, dicesColorSelectCounter - 1, BLUE);
                 }
 
-                if (dicesCount < 2)
-                    showSettingsColor(false, true);
+                //if (dicesCount < 2) showSettingsColor(false, true);
                 break;
             case R.id.viewGreen:
                 Animators.animateButtonClick2(viewGreen, 1f);
@@ -481,8 +492,7 @@ public class MainActivity extends AppCompatActivity implements
                     dicesColorSet.setDiceItemColor(dicesCount, dicesColorSelectCounter - 1, GREEN);
                 }
 
-                if (dicesCount < 2)
-                    showSettingsColor(false, true);
+                //if (dicesCount < 2) showSettingsColor(false, true);
                 break;
             case R.id.viewYellow:
                 Animators.animateButtonClick2(viewYellow, 1f);
@@ -491,8 +501,7 @@ public class MainActivity extends AppCompatActivity implements
                     dicesColorSet.setDiceItemColor(dicesCount, dicesColorSelectCounter - 1, YELLOW);
                 }
 
-                if (dicesCount < 2)
-                    showSettingsColor(false, true);
+                //if (dicesCount < 2) showSettingsColor(false, true);
                 break;
             case R.id.labelClose:
                 Animators.animateButtonClick2(labelClose, 1f);
@@ -675,6 +684,14 @@ public class MainActivity extends AppCompatActivity implements
 
     public void showSettingsLanguage(boolean show, boolean animate) {
         if (show) {
+            if (this.language == Language.CZ) {
+                AppUtils.setMaxScale(imgCheckCz);
+                AppUtils.setMinScale(imgCheckEng);
+            } else {
+                AppUtils.setMaxScale(imgCheckEng);
+                AppUtils.setMinScale(imgCheckCz);
+            }
+
             settingsLanguageShowed = true;
             layoutLanguage.setVisibility(View.VISIBLE);
 

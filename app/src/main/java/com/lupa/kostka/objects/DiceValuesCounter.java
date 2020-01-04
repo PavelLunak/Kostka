@@ -122,6 +122,12 @@ public class DiceValuesCounter extends View {
 
         Rect boundsFillText = new Rect();
         Rect boundsStrokeText = new Rect();
+
+        /*
+        V následující části zjišťuji rozměry textu, který bude vykreslen. Hodnota 36 je zde proto,
+        že je to maximální součet maximálního počtu kostek (6x6). Pokud toto neprovedu,
+        není zaručeno, že zobrazovaný součet kostek nebude mít pokaždé stejnou velikost.
+        */
         paintFillText.getTextBounds("36", 0, 2, boundsFillText);
         paintStrokeText.getTextBounds("36", 0, 2, boundsStrokeText);
 
