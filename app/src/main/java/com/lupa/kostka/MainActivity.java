@@ -1,7 +1,5 @@
 package com.lupa.kostka;
 
-import android.animation.AnimatorSet;
-import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -34,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements
         FragmentManager.OnBackStackChangedListener,
         AppConstants {
 
+    //Animace střídání fragmentů
     int animShowFragment = R.anim.anim_fragment_show;
     int animHideFragment = R.anim.anim_fragment_hide;
 
@@ -66,20 +65,24 @@ public class MainActivity extends AppCompatActivity implements
     //Objekt pro ukládání a sčítání hodnot kostek při míchání
     public Counter counter;
 
+    //Aktuálně nastavené pozadí
     public Theme theme = Theme.DARK;
+
+    //Aktuálně nastavený jazyk
     public Language language = Language.ENG;
 
-    FragmentDices fragmentDices;
-    FragmentInfo fragmentInfo;
-    FragmentMain fragmentMain;
+    FragmentDices fragmentDices;    //Fragment s kostkami
+    FragmentInfo fragmentInfo;      //Fragment s informacemi o aplikaci
+    FragmentMain fragmentMain;      //Hlavní fragment s volbou počtu kostek
 
     //Odpočet pro dobu zobrazení úvodního obrázku
     CountDownTimer introTimer;
     long introTimerCounter;
 
-    //Počítadlo pro postupný cyklický  výběr barev kostek v sadě
+    //Počítadlo pro postupný cyklický výběr barev.
     int dicesColorSelectCounter;
 
+    //Příznak, že došlo ke změně stavu aplikace (otočení telefonu, atd.)
     boolean isSavedInstanceState;
 
 
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Nastavení aplikace FULLSCREEN
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -94,34 +98,34 @@ public class MainActivity extends AppCompatActivity implements
 
         fragmentManager = getSupportFragmentManager();
 
-        imageView = findViewById(R.id.imageView);
-        container = findViewById(R.id.container);
-        layoutClick = findViewById(R.id.layoutClick);
-        root = findViewById(R.id.root);
-        btnSettings = findViewById(R.id.btnSettings);
-        layoutLanguage = findViewById(R.id.layoutLanguage);
-        imgSettings = findViewById(R.id.imgSettings);
+        imageView = findViewById(R.id.imageView);                   //Úvodní obrázek - soutež ITnetwork
+        container = findViewById(R.id.container);                   //Layout pro fragmenty
+        layoutClick = findViewById(R.id.layoutClick);               //Layout pro detekci kliknutí na poli s kostkami
+        root = findViewById(R.id.root);                             //Hlavní layout aplikace
+        btnSettings = findViewById(R.id.btnSettings);               //Ozubené kolečko pro vstup do nastavení
+        layoutLanguage = findViewById(R.id.layoutLanguage);         //Layout nastavení jazyka
+        imgSettings = findViewById(R.id.imgSettings);               //Ozubené kolečko nastavení
         layoutSettingsRoot = findViewById(R.id.layoutSettingsRoot);
-        layoutColor = findViewById(R.id.layoutColor);
-        layoutSettings = findViewById(R.id.layoutSettings);
-        imgTheme = findViewById(R.id.imgTheme);
-        imgColor = findViewById(R.id.imgColor);
-        imgLanguage = findViewById(R.id.imgLanguage);
-        imgInfo = findViewById(R.id.imgInfo);
-        imgClose = findViewById(R.id.imgClose);
-        imgCz = findViewById(R.id.imgCz);
-        imgEng = findViewById(R.id.imgEng);
-        imgCheckCz = findViewById(R.id.imgCheckCz);
-        imgCheckEng = findViewById(R.id.imgCheckEng);
-        viewBlack = findViewById(R.id.viewBlack);
-        viewWhite = findViewById(R.id.viewWhite);
-        viewRed = findViewById(R.id.viewRed);
-        viewBlue = findViewById(R.id.viewBlue);
-        viewGreen = findViewById(R.id.viewGreen);
-        viewYellow = findViewById(R.id.viewYellow);
-        layoutInfo1 = findViewById(R.id.layoutInfo1);
-        labelInfo1 = findViewById(R.id.labelInfo1);
-        labelClose = findViewById(R.id.labelClose);
+        layoutColor = findViewById(R.id.layoutColor);               //Nastavení barev
+        layoutSettings = findViewById(R.id.layoutSettings);         //Layout ozubeného kolečka - nastavení
+        imgTheme = findViewById(R.id.imgTheme);                     //Přepínání barvy pozadí
+        imgColor = findViewById(R.id.imgColor);                     //Volba v menu nastavení - volba barev kostek
+        imgLanguage = findViewById(R.id.imgLanguage);               //Volba v menu nastavení - volba jazyka
+        imgInfo = findViewById(R.id.imgInfo);                       //Volba v menu nastavení - zobrazení infa
+        imgClose = findViewById(R.id.imgClose);                     //Volba v menu nastavení - konec aplikace
+        imgCz = findViewById(R.id.imgCz);                           //Nastavení jazyka - Volba CZ
+        imgEng = findViewById(R.id.imgEng);                         //Nastavení jazyka - Volba ENG
+        imgCheckCz = findViewById(R.id.imgCheckCz);                 //Označení zvoleného jazyka na vlajce - CZ
+        imgCheckEng = findViewById(R.id.imgCheckEng);               //Označení zvoleného jazyka na vlajce - ENG
+        viewBlack = findViewById(R.id.viewBlack);                   //Menu volby barvy - černá
+        viewWhite = findViewById(R.id.viewWhite);                   //Menu volby barvy - bílá
+        viewRed = findViewById(R.id.viewRed);                       //Menu volby barvy - červená
+        viewBlue = findViewById(R.id.viewBlue);                     //Menu volby barvy - modrá
+        viewGreen = findViewById(R.id.viewGreen);                   //Menu volby barvy - zelená
+        viewYellow = findViewById(R.id.viewYellow);                 //Menu volby barvy - žlutá
+        layoutInfo1 = findViewById(R.id.layoutInfo1);               //Informační okno s nápovědou pro první otevření aplikace
+        labelInfo1 = findViewById(R.id.labelInfo1);                 //Informační text s nápovědou pro první otevření aplikace
+        labelClose = findViewById(R.id.labelClose);                 //Informační okno s nápovědou pro první otevření aplikace - tlačítko "Zavřít"
 
         btnSettings.setOnClickListener(this);
         imgTheme.setOnClickListener(this);
@@ -134,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements
         layoutClick.setOnClickListener(this);
         labelClose.setOnClickListener(this);
 
+        //Tlačítka výběru jednotlivých barev v nastavení
         viewBlack.setOnClickListener(this);
         viewWhite.setOnClickListener(this);
         viewRed.setOnClickListener(this);
@@ -141,7 +146,8 @@ public class MainActivity extends AppCompatActivity implements
         viewGreen.setOnClickListener(this);
         viewYellow.setOnClickListener(this);
 
-        //Objekt pro uložení zvolených barev kostek
+        //Objekt pro uložení zvolených barev kostek do SharedPreferences. Zvolené barvy se uloží a
+        //při dalším spuštění aplikace budou barvy kostek nastaveny na poslední (tyto) hodnoty
         dicesColorSet = new DicesColorSet();
 
         language = PrefsUtils.getEngLanguage(this) ? Language.ENG : Language.CZ;
@@ -201,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements
         if (introTimer != null) introTimer.cancel();
         introTimer = null;
 
-        //Uložení barev kostek
+        //Uložení barev kostek do SharedPreferences
         PrefsUtils.updateDiceColor(
                 this,
                 dicesCount,
@@ -214,16 +220,28 @@ public class MainActivity extends AppCompatActivity implements
 
         if (counter == null) counter = new Counter();
 
-        updateTheme();
-        updateImage();
+        updateTheme();  //Nastavení barvy pozadí podle poslední volby
+        updateImage();  //Výběr úvodního obrázku (ITnetwork) podle nastaveného jazyka
+
+        //Pokud bylo telefonem otočeno při otevřeném menu,
+        //bude menu po dokončení otočení zobrazeno okamžitě bez animace
         showSettings(settingsShowed, false);
         showSettingsColor(settingsColorShowed, false);
         showSettingsLanguage(settingsLanguageShowed, false);
 
+        //Pokud nebyl zobrazen úvodní obrázek ITnetwork (start aplikace)
+        //nebo pokud je již obrázek zobrazen, ale během jeho zobrazování došlo k otočení telefonu,
+        //bude zobrazení úvodu provedeno.
         if (!introShowed || introTimerCounter > 0) {
+            //Během intra není zobrazeno tlačítko (ozubené kolečko)
+            //pro přístup do nastavení aplikace
             btnSettings.setVisibility(View.GONE);
+
+            //Nastavení příznaku, že již bylo intro zobrazeno. Aby se nám znovu nezobrazilo
+            //po otočení telefonu
             introShowed = true;
 
+            //Odpočet času, po který je zobrazeno intro
             introTimer = new CountDownTimer(INTRO_DISPLAY_DELAY - introTimerCounter, 200) {
                 @Override
                 public void onTick(long time) {
@@ -235,12 +253,13 @@ public class MainActivity extends AppCompatActivity implements
                     imageView.setVisibility(View.GONE);
                     introTimerCounter = 0;
                     introTimer = null;
-                    showFragmentMain();
+                    showFragmentMain(); //Po intru se zobrazí fragment s volbou počtu kostek
                     btnSettings.setVisibility(View.VISIBLE);
+
+                    //Plynulé zobrazení ozubeného kolečka - animace.
                     Animators.showViewScaleSmoothly(btnSettings, true, true, 100);
                 }
             };
-
             introTimer.start();
         } else {
             imageView.setVisibility(View.GONE);
@@ -252,6 +271,8 @@ public class MainActivity extends AppCompatActivity implements
         fragmentDices = (FragmentDices) fragmentManager.findFragmentByTag(FRAGMENT_DICE);
         fragmentInfo = (FragmentInfo) fragmentManager.findFragmentByTag(FRAGMENT_INFO);
 
+        //Aplikace je po změně stavu - po otočení telefonu, atd.
+        //Nastavení příznaku do fragmentu s kostkami, že došlo k otočení telefonu...
         if (isSavedInstanceState) {
             if (fragmentDices != null) {
                 if (fragmentDices.getValueCounter() != null) {
@@ -260,24 +281,18 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
 
+        //Zobrazení nebo skrytí layoutu pro klik na kostkách podle toho, zda je
+        //fragment s kostkami zobrazen
         if (AppUtils.isFragmentCurrent(FRAGMENT_DICE, fragmentManager)) {
             layoutClick.setVisibility(View.VISIBLE);
 
+            //Pokud je zobrazen fragment s kostkami a zároveň byla aplika spuštěna poprvé,
+            //bude zobrazeno okno s nápovědou
             if (PrefsUtils.canShowHelp1(this)) {
                 showHelp1(true, !help1Showed);
             }
         } else {
             layoutClick.setVisibility(View.GONE);
-        }
-
-        if (fragmentDices != null) {
-            if (dicesCount > 1) {
-                if (counter != null) {
-                    if (counter.getValue() > 0) {
-                        fragmentDices.setCounter(false);
-                    }
-                }
-            }
         }
     }
 
@@ -311,21 +326,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        if (settingsLanguageShowed) {
-            showSettingsLanguage(false, true);
-            return;
-        }
-
-        if (settingsColorShowed) {
-            showSettingsColor(false, true);
-            return;
-        }
-
         if (settingsShowed) {
             showSettings(false, true);
             return;
         }
 
+        //Zavření úvodního obrázku před vypršením časového limitu do jeho zavření
         if (introTimer != null) {
             imageView.setVisibility(View.GONE);
             introTimer.cancel();
@@ -402,6 +408,8 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.imgColor:
                 Animators.animateButtonClick2(imgColor, 1f);
 
+                //Nastavení barev kostek bude možné pouze pokud bude
+                //aktuálně zobrazen fragment s kostkami
                 if (!AppUtils.isFragmentCurrent(FRAGMENT_DICE, fragmentManager)) {
                     Toast.makeText(
                             MainActivity.this,

@@ -24,14 +24,20 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
     View view;
     RelativeLayout root;
     Dice dice1, dice2, dice3, dice4, dice5, dice6;
+
+    //Třída pro zobrazení součtu hodnot všech kostek
     DiceValuesCounter valueCounter;
 
+    //Listener pro ukončení míchání kostky.
     Dice.OnDiceShuffledListener onDiceShuffledListener = new Dice.OnDiceShuffledListener() {
         @Override
         public void onDiceShuffled(int diceId, int value) {
             if (valueCounter != null) {
                 activity.counter.add(value);
 
+                //Listener porovná počet zobrazených kostek s počtem hodnot, které dosud obdržel
+                //(proměnná ve třídě DiceValuesCounter) Jsou-li obě hodnoty stejné, znamená to,
+                //že jsou zamíchány všechny zobrazené kostky a je možné zobrazit výsledek
                 if (activity.counter.getValuesCount() == activity.dicesCount) {
                     valueCounter.setValue(true);
                 }
@@ -51,6 +57,7 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //Podle zvoleného počtu kostek se vybere příslušný layout
         switch (activity.dicesCount) {
             case 1:
                 view = inflater.inflate(R.layout.fragment_one, container, false);
@@ -91,6 +98,7 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
             }
         }
 
+        //Součet kostek bude zobrazován pouze v případě, že bude zvolen počet kostek větší než 1.
         if (activity.dicesCount > 1) {
             valueCounter = view.findViewById(R.id.valueCounter);
             valueCounter.setActivityContext(activity);
@@ -108,6 +116,7 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
         if (activity.dicesCount > 1) {
             dice2 = view.findViewById(R.id.dice2);
             dice2.setOnDiceShuffledListener(onDiceShuffledListener);
+            //Obnovení nastavených barev kostek z SharedPreferences
             dice2.setDiceColor(activity.dicesColorSet.getDiceItemColor(activity.dicesCount, 2));
             if (activity.dicesCount > 2) {
                 dice3 = view.findViewById(R.id.dice3);
@@ -154,10 +163,11 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (activity.settingsColorShowed) activity.showSettingsColor(false, true);
+        //Zavření nastavení při kliknutí kamkoliv mimo nastavení
         if (activity.settingsShowed) activity.showSettings(false, true);
     }
 
+    //Nastavení barvy tohoto fragmentu
     public void setColor(MainActivity.Theme theme) {
         root.setBackgroundColor(
                 activity.getResources().getColor(theme == MainActivity.Theme.LIGHT ?
@@ -165,6 +175,7 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
                         R.color.colorBackgroundDark));
     }
 
+    //Zahájení míchání kostek
     public void startShuffle() {
         if (valueCounter != null) valueCounter.setValue(false);
 
@@ -187,6 +198,7 @@ public class FragmentDices extends Fragment implements View.OnClickListener {
         }
     }
 
+    //Zastavení míchání kostek
     public void stopShuffle() {
         if (valueCounter != null) valueCounter.setValue(false);
 

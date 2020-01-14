@@ -89,6 +89,7 @@ public class FragmentInfo extends Fragment implements View.OnClickListener {
         labelVersion.setText(AppUtils.getVersion());
     }
 
+    //Nastavení barvy tohoto fragmentu
     public void setColor(MainActivity.Theme theme) {
         if (theme == MainActivity.Theme.LIGHT) {
             root.setBackgroundColor(activity.getResources().getColor(R.color.colorBackgroundLight));

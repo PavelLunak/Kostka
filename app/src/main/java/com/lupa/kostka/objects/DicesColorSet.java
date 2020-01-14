@@ -5,6 +5,13 @@ import android.util.Log;
 
 import com.lupa.kostka.utils.AppConstants;
 
+/*
+Třída pro uchování sad barev pro jednotlivé skupiny kostek. Každá barva má přořazenu číselnou
+konstantu. Každá sada je před uložením do SharedPreferences převedena z pole na textový řetězec
+obsahující jednotlivé kódy barev oddělené čárkou. Po načtení sady barev (v podobě textového řetězce)
+je tento řetězec převeden na pole.
+*/
+
 public class DicesColorSet implements AppConstants {
 
     private int oneDice;
@@ -27,6 +34,12 @@ public class DicesColorSet implements AppConstants {
 
     //-----------------------------------------------------------------
 
+    /*
+    Nastavení barvy jedné kostky.
+    dicesCount : počet kostek sady
+    diceOrder : pořadí kostky v sadě, u které má změna proběhnout
+    colorCode : kód barvy, která byla zvolena
+    */
     public void setDiceItemColor(int dicesCount, int diceOrder, int colorCode) {
         if (dicesCount == 1) {
             oneDice = colorCode;
@@ -53,6 +66,7 @@ public class DicesColorSet implements AppConstants {
         }
     }
 
+    //Vrací barvu kostky dané sadou kostek a pořadím dané kostky v sadě
     public int getDiceItemColor(int dicesCount, int diceOrder) {
         if (dicesCount == 1) {
             return oneDice;

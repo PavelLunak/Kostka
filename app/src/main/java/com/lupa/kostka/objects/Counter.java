@@ -3,10 +3,17 @@ package com.lupa.kostka.objects;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/*
+Třída pro výpočet a uchování součtu hodnot všech kostek, které jsou současně zamíchány. Třída navíc uchovává
+počet přijatých hodnot. Tato hodnota je v kódu aplikace používána k tomu, aby bylo detekováno,
+že jsou již zamíchány všechny kostky a že je možné zobrazit součet hodnot všech kostek. Po získání
+očekávaného počtu hodnot je počítadlo vynulováno.
+*/
+
 public class Counter implements Parcelable {
 
-    private int value;
-    private int valuesCount;
+    private int value;          //Součet přijatých hodnot
+    private int valuesCount;    //Počet přijakých hodnot
 
 
     public Counter() {

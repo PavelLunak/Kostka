@@ -101,9 +101,8 @@ public class FragmentMain extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (activity.settingsShowed || activity.settingsColorShowed) {
-            if (activity.settingsColorShowed) activity.showSettingsColor(false, true);
-            if (activity.settingsShowed) activity.showSettings(false, true);
+        if (activity.settingsShowed) {
+            activity.showSettings(false, true);
             return;
         }
 
@@ -141,6 +140,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener {
         }
     }
 
+    //Nastavení barvy tohoto fragmentu
     public void setColor(MainActivity.Theme theme) {
         if (theme == MainActivity.Theme.LIGHT) {
             root.setBackgroundColor(activity.getResources().getColor(R.color.colorBackgroundLight));

@@ -26,11 +26,11 @@ public class Dice extends View {
     public enum DiceColor {BLACK, WHITE, RED, BLUE, GREEN, YELLOW}
     DiceColor diceColor = DiceColor.BLACK;
 
-    int width;
-    int height;
+    int width;                          //Šířka prostoru pro vykreslení kostky
+    int height;                         //Výška prostoru pro vykreslení kostky
 
-    int centerX;
-    int centerY;
+    int centerX;                        //Střed kostky (souřadnice X)
+    int centerY;                        //Střed kostky (souřadnice Y)
 
     int diceEdgeLength;                 //Délka hrany kostky
     int sideCircleRadius;               //Poloměr kruhové části, ve které jsou tečky
@@ -41,7 +41,7 @@ public class Dice extends View {
     int topBottomPointIndent;           //Odsazení teček nahoře a dole
 
     int pointRadius;                    //Poloměr teček
-    Point[] points;
+    Point[] points;                     //Pole teček pro kostku
 
     private Paint paintDice = new Paint();          //Hlavní barva kostky
     private Paint paintDice2 = new Paint();         //Barva kostky s gradientem do stínu (rohy)
@@ -77,6 +77,7 @@ public class Dice extends View {
     }
 
     /*
+    Pozice teček podle indexů v proměnné points
     0     4
     1  3  5
     2     6
@@ -111,6 +112,7 @@ public class Dice extends View {
     }
 
     private void showPoints(Canvas canvas, int number) {
+        //Zobrazení příslušných teček podle hodnoty kostky
         switch (number) {
             case 1:
                 showPoint(canvas, points[3]);
@@ -145,6 +147,7 @@ public class Dice extends View {
         }
     }
 
+    //Zobrazí jednu tečku zadanou v parametru
     private void showPoint(Canvas canvas, Point point) {
         paintPointSheen.setAntiAlias(true);
         paintPointSheen.setStyle(Paint.Style.FILL);
@@ -194,11 +197,6 @@ public class Dice extends View {
         sideCircleSeenRadius = (int) ((float) sideCircleRadius * 1.1);
 
         setMeasuredDimension(width, height);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
     }
 
     @Override
