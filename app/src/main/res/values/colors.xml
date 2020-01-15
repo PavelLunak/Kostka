@@ -17,19 +17,19 @@
     <color name="diceColorBlack">#555252</color>
     <color name="diceColorBlack2">#000000</color>
 
-    <!-- RED DICE A00F0F -->
+    <!-- RED DICE -->
     <color name="diceColorRed">#E71414</color>
     <color name="diceColorRed2">#831313</color>
 
-    <!-- BLUE DICE 2172A7 -->
+    <!-- BLUE DICE -->
     <color name="diceColorBlue">#1493E7</color>
     <color name="diceColorBlue2">#15425F</color>
 
-    <!-- GREEN DICE 1E7222 -->
+    <!-- GREEN DICE -->
     <color name="diceColorGreen">#1ABB21</color>
     <color name="diceColorGreen2">#164B19</color>
 
-    <!-- YELLOW DICE B1A325 -->
+    <!-- YELLOW DICE -->
     <color name="diceColorYellow">#E9D310</color>
     <color name="diceColorYellow2">#817720</color>
 

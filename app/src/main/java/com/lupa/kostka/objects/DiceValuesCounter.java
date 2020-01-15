@@ -18,25 +18,28 @@ import android.view.View;
 import com.lupa.kostka.MainActivity;
 import com.lupa.kostka.R;
 
+/*
+Třída zajišťující zobrazení součtu hodnot hozených kostek. Součet hodnot kostek je zobrazen pouze
+v případě, že jsou zobrazeny minimálně dvě kostky.
+*/
+
 public class DiceValuesCounter extends View {
 
     MainActivity activity;
 
-    int width;
-    int height;
+    int width;                              //Šířka prostoru pro text
+    int height;                             //Výška prostoru pro text
 
-    Paint paintFillText;
-    Paint paintStrokeText;
-    int textSize = 0;
-    int textPositionY;
+    Paint paintFillText;                    //Styl pro výplň textu
+    Paint paintStrokeText;                  //Styl ohraničení textu
+    int textSize = 0;                       //Velikost textu
+    int textPositionY;                      //Souřadnice pro Y polohu textu
 
     //Proměnné pro animaci
-    ValueAnimator valueAnimatorAlpha;
-    boolean textSizeAnimationIsRunning;
-    boolean textAlphaAnimationIsRunning;
-    boolean afterRestoreInstanceState;
-    int valueToDraw;
-    int textAlphaToDraw = 0;
+    ValueAnimator valueAnimatorAlpha;       //Animace plynulého skrytí textu
+    boolean afterRestoreInstanceState;      //Příznak, že je aplikace po změně stavu (otočení, atd.)
+    int valueToDraw;                        //Součet kostek k zobrazení
+    int textAlphaToDraw = 0;                //Průhlednost textu k zobrazení
 
     public DiceValuesCounter(Context context) {
         super(context);
@@ -66,6 +69,7 @@ public class DiceValuesCounter extends View {
 
         width = getMeasuredWidth();
         height = getMeasuredHeight();
+
         textSize = (int) ((float)height*0.9);
 
         setMeasuredDimension(width, height);
@@ -123,9 +127,10 @@ public class DiceValuesCounter extends View {
         Rect boundsStrokeText = new Rect();
 
         /*
-        V následující části zjišťuji rozměry textu, který bude vykreslen. Hodnota 36 je zde proto,
-        že je to maximální součet maximálního počtu kostek (6x6). Pokud toto neprovedu,
-        není zaručeno, že zobrazovaný součet kostek nebude mít pokaždé stejnou velikost.
+        V následující části jsou zjišťovány rozměry textu, který bude vykreslen.
+        Hodnota 36 je zde proto, že se jedná o maximální možný součet maximálního možného
+        počtu kostek (6x6). Pokud toto nebude provedeno, není zaručeno, že zobrazovaný součet
+        kostek nebude mít pokaždé stejnou velikost.
         */
         paintFillText.getTextBounds("36", 0, 2, boundsFillText);
         paintStrokeText.getTextBounds("36", 0, 2, boundsStrokeText);
@@ -186,7 +191,6 @@ public class DiceValuesCounter extends View {
             public void onAnimationEnd(Animator animator) {
                 valueAnimatorAlpha = null;
                 textAlphaToDraw = 0;
-                textAlphaAnimationIsRunning = false;
                 DiceValuesCounter.this.invalidate();
             }
 
@@ -194,7 +198,6 @@ public class DiceValuesCounter extends View {
             public void onAnimationCancel(Animator animator) {
                 valueAnimatorAlpha = null;
                 textAlphaToDraw = 0;
-                textSizeAnimationIsRunning = false;
                 DiceValuesCounter.this.invalidate();
             }
 

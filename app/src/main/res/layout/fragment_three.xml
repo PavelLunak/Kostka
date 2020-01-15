@@ -5,35 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundDark">
 
-    <!--
-    <LinearLayout
-        android:id="@+id/layoutPlay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/button"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/btnPlay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/font_kabanan"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="P L A Y"
-            android:textColor="@color/colorBackgroundDark"
-            android:textSize="36sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-    -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

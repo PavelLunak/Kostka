@@ -1,5 +1,9 @@
 package com.lupa.kostka.objects;
 
+/*
+Třída pro uchování souřadnic bodů na kostce
+*/
+
 public class Point {
 
     private int x;
