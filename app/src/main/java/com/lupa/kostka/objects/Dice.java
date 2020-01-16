@@ -245,7 +245,7 @@ public class Dice extends View {
                 centerY - (diceEdgeLength / 2),
                 centerX + (diceEdgeLength / 2),
                 centerY + (diceEdgeLength / 2));
-        canvas.drawRoundRect(rectf,70, 70, paintDice2);
+        canvas.drawRoundRect(rectf,(int)(((float)diceEdgeLength)*0.2), (int)(((float)diceEdgeLength)*0.2), paintDice2);
 
         canvas.drawCircle(centerX, centerY, sideCircleSeenRadius, paintCircleSheen);
         canvas.drawCircle(centerX, centerY, sideCircleRadius, paintDice);
