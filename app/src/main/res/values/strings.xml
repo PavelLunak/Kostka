@@ -10,7 +10,7 @@
     <string name="version">Version:</string>
     <string name="version_cz">Verze:</string>
 
-    <string name="source_code">Source codes</string>
+    <string name="source_code">Source code</string>
     <string name="source_code_cz">Zdrojové kódy</string>
 
     <string name="here">HERE</string>
@@ -23,7 +23,7 @@
     <string name="toast_color_cz">Volba barev je dostupná pouze při zobrazených kostkách.</string>
 
     <string name="text_info_1">Welcome to the app Dice!</string>
-    <string name="text_info_1_cz">Vítejte v aplikaci Kostka</string>
+    <string name="text_info_1_cz">Vítejte v aplikaci Kostka!</string>
 
     <string name="text_info_2">The application serves as a substitute for dice. Missing dice to play? If so, use this app! You can choose from one to six dice. Individual dice can be colored with one of six prepared colors.</string>
     <string name="text_info_2_cz">Aplikace slouží jako náhrada hracích kostek. Postrádáte kostky ke hře? Pokud ano, použijte tuto aplikaci! Máte na výběr jednu až šest kostek. Jednotlivé kostky můžete obarvit jednou ze šesti připravených barev.</string>
